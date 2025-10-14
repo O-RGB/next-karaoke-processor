@@ -1346,11 +1346,21 @@
               batchPromises.push(
                 (async () => {
                   const track = await getRecord(j);
-                  if (!track) return null;
+                  if (!track) {
+                    processedCount++; // เพิ่ม index แม้ไม่มี track
+                    return null;
+                  }
+
+                  // กำหนด index ก่อนประมวลผล เพื่อให้ตำแหน่งตรงกันเสมอ
+                  const currentIndex = processedCount;
+                  processedCount++;
 
                   try {
                     const files = await getSongFiles(track);
-                    if (!files) return null;
+                    if (!files) {
+                      // ไม่มีไฟล์ แต่ index ถูกกำหนดไปแล้ว (ข้าม index นี้)
+                      return null;
+                    }
 
                     let content = null;
                     let filename = "";
@@ -1370,26 +1380,25 @@
                         compression: "DEFLATE",
                         compressionOptions: { level: compressionLevel },
                       });
-                      filename = `${processedCount}.zip`;
+                      filename = `${currentIndex}.zip`;
                     } else if (track.SUB_TYPE === "EMK" && files.emk) {
                       content = new Uint8Array(files.emk);
-                      filename = `${processedCount}.emk`;
+                      filename = `${currentIndex}.emk`;
                     }
 
-                    track._originalIndex = processedCount;
+                    // บันทึก index ที่ถูกต้อง
+                    track._originalIndex = currentIndex;
                     track._superIndex = batchIndex;
 
                     await storeRecord(track, j);
 
-                    processedCount++;
-
                     return { trackId: j, content, filename };
                   } catch (e) {
+                    // เกิด error แต่ index ถูกข้ามไปแล้ว
                     return null;
                   }
                 })()
               );
-            }
 
             const results = await Promise.all(batchPromises);
             results.forEach((result) => {
