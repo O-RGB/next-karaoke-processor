@@ -497,7 +497,7 @@
             <input
               type="number"
               id="zipSizeLimit"
-              value="500"
+              value="200"
               min="50"
               max="5000"
             />
@@ -1534,7 +1534,6 @@
               log(`✅ โหลด ZIP สำเร็จ`, "info");
               updateStatus(`พร้อมเริ่มงาน`);
             } catch (err) {
-              console.error(err); // Log full error to console for details
               log(`❌ ไม่สามารถโหลดไฟล์ ZIP: ${err.message}`, "error");
               updateStatus(`❌ ไม่สามารถโหลด ZIP`);
             }
