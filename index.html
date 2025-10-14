@@ -1400,62 +1400,63 @@
                 })()
               );
 
-            const results = await Promise.all(batchPromises);
-            results.forEach((result) => {
-              if (result && result.content) {
-                currentBatch.push(result);
+              const results = await Promise.all(batchPromises);
+              results.forEach((result) => {
+                if (result && result.content) {
+                  currentBatch.push(result);
 
-                if (config.createZips && currentBatchZip) {
-                  currentBatchZip.file(result.filename, result.content);
-                  currentBatchSize += result.content.length;
+                  if (config.createZips && currentBatchZip) {
+                    currentBatchZip.file(result.filename, result.content);
+                    currentBatchSize += result.content.length;
+                  }
                 }
+              });
+
+              if (
+                currentBatch.length >= config.batchSize ||
+                (config.createZips && currentBatchSize >= config.zipSizeLimit)
+              ) {
+                if (config.createZips && currentBatchZip) {
+                  log(
+                    `💾 บันทึก batch ${batchIndex}: ${
+                      currentBatch.length
+                    } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)}MB)`,
+                    "info"
+                  );
+                  const batchData = await currentBatchZip.generateAsync({
+                    type: "uint8array",
+                    compression: config.performanceMode ? "DEFLATE" : "DEFLATE",
+                    compressionOptions: config.performanceMode
+                      ? { level: 1 }
+                      : { level: 6 },
+                  });
+                  await storeBatch(batchIndex, batchData);
+                  currentBatchZip = null;
+                }
+
+                batchIndex++;
+                currentBatch = [];
+                currentBatchZip = config.createZips ? new JSZip() : null;
+                currentBatchSize = 0;
               }
-            });
 
-            if (
-              currentBatch.length >= config.batchSize ||
-              (config.createZips && currentBatchSize >= config.zipSizeLimit)
-            ) {
-              if (config.createZips && currentBatchZip) {
-                log(
-                  `💾 บันทึก batch ${batchIndex}: ${
-                    currentBatch.length
-                  } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)}MB)`,
-                  "info"
-                );
-                const batchData = await currentBatchZip.generateAsync({
-                  type: "uint8array",
-                  compression: config.performanceMode ? "DEFLATE" : "DEFLATE",
-                  compressionOptions: config.performanceMode
-                    ? { level: 1 }
-                    : { level: 6 },
-                });
-                await storeBatch(batchIndex, batchData);
-                currentBatchZip = null;
-              }
-
-              batchIndex++;
-              currentBatch = [];
-              currentBatchZip = config.createZips ? new JSZip() : null;
-              currentBatchSize = 0;
-            }
-
-            const progress = 15 + Math.floor((end / totalRecords) * 70);
-            updateProgress(progress);
-            log(
-              `⏳ ประมวลผล: ${processedCount}/${totalRecords} (${end} records)`,
-              "info"
-            );
-
-            if (
-              (i % 100 === 0 || end >= totalRecords) &&
-              config.cpuThrottle > 0
-            ) {
-              await sleep(
-                config.performanceMode
-                  ? Math.min(config.cpuThrottle, 1)
-                  : config.cpuThrottle
+              const progress = 15 + Math.floor((end / totalRecords) * 70);
+              updateProgress(progress);
+              log(
+                `⏳ ประมวลผล: ${processedCount}/${totalRecords} (${end} records)`,
+                "info"
               );
+
+              if (
+                (i % 100 === 0 || end >= totalRecords) &&
+                config.cpuThrottle > 0
+              ) {
+                await sleep(
+                  config.performanceMode
+                    ? Math.min(config.cpuThrottle, 1)
+                    : config.cpuThrottle
+                );
+              }
             }
           }
 
