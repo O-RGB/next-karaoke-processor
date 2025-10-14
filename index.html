@@ -306,8 +306,8 @@
         background: #1e293b;
         border-radius: 10px;
         padding: 20px;
-        min-height: 300px;
-        max-height: 300px;
+        min-height: 200px;
+        max-height: 200px;
         overflow-y: auto;
         font-family: "Courier New", monospace;
         font-size: 0.85rem;
@@ -317,6 +317,7 @@
       .log-entry {
         padding: 8px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        animation: slideIn 0.3s ease-out;
       }
 
       .log-entry:last-child {
@@ -464,7 +465,9 @@
         <div class="alert">
           <strong>⚠️ ข้อกำหนดการใช้งาน:</strong>
           สำหรับโฟลเดอร์: ต้องใช้เบราว์เซอร์ที่รองรับ File System Access API
-          (Chrome 86+, Edge 86+)
+          (Chrome 86+, Edge 86+)<br />
+          สำหรับ ZIP: รองรับทุกเบราว์เซอร์ที่ใช้ JSZip
+          (ไม่โหลดเนื้อหาทั้งหมดเข้า RAM ทันที)
         </div>
 
         <!-- Input Selection -->
@@ -473,6 +476,9 @@
           <div class="btn-group">
             <button class="btn btn-primary" id="selectFolderBtn">
               📁 เลือกโฟลเดอร์
+            </button>
+            <button class="btn btn-primary" id="uploadZipBtn">
+              📦 อัปโหลด ZIP
             </button>
           </div>
           <div class="file-info" id="inputInfo">ยังไม่ได้เลือกอินพุต</div>
