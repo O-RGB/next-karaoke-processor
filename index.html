@@ -1458,6 +1458,7 @@
           await initDB();
           await clearDBStore(STORE_RECORDS);
           await clearDBStore(STORE_BATCHES);
+          await clearDBStore(STORE_ARCHIVES); ​
           if (!rootDirHandle) {
             throw new Error("กรุณาเลือกโฟลเดอร์ก่อน");
           }
@@ -1782,6 +1783,7 @@
           elements.stopBtn.disabled = true;
           await clearDBStore(STORE_RECORDS);
           await clearDBStore(STORE_BATCHES);
+          await clearDBStore(STORE_ARCHIVES);
           log("🧹 ล้างฐานข้อมูล IndexedDB เสร็จสิ้น", "info");
         }
       }
