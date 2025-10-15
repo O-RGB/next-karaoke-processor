@@ -1458,6 +1458,7 @@
           await clearDBStore(STORE_RECORDS);
           await clearDBStore(STORE_BATCHES);
           await clearDBStore(STORE_ARCHIVES);
+          renderDownloadSection();
           if (!rootDirHandle) {
             throw new Error("กรุณาเลือกโฟลเดอร์ก่อน");
           }
