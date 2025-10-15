@@ -1328,7 +1328,7 @@
           updateStatus("กำลังประมวลผลเพลง...");
 
           const totalRecords = await getRecordsCount();
-          let processedCount = 0;
+          let successCount = 0;
           let currentBatch = [];
           let currentBatchZip = config.createZips ? new JSZip() : null;
           let currentBatchSize = 0;
@@ -1370,18 +1370,18 @@
                         compression: "DEFLATE",
                         compressionOptions: { level: compressionLevel },
                       });
-                      filename = `${processedCount}.zip`;
+                      filename = `${j}.zip`;
                     } else if (track.SUB_TYPE === "EMK" && files.emk) {
                       content = new Uint8Array(files.emk);
-                      filename = `${processedCount}.emk`;
+                      filename = `${j}.emk`;
                     }
 
-                    track._originalIndex = processedCount;
+                    track._originalIndex = j;
                     track._superIndex = batchIndex;
 
                     await storeRecord(track, j);
 
-                    processedCount++;
+                    successCount++;
 
                     return { trackId: j, content, filename };
                   } catch (e) {
@@ -1434,7 +1434,7 @@
             const progress = 15 + Math.floor((end / totalRecords) * 70);
             updateProgress(progress);
             log(
-              `⏳ ประมวลผล: ${processedCount}/${totalRecords} (${end} records)`,
+              `⏳ ประมวลผล: ${successCount}/${totalRecords} (${end} records)`,
               "info"
             );
 
@@ -1468,7 +1468,7 @@
 
           updateProgress(85);
           log(
-            `✅ ประมวลผลเสร็จ: ${processedCount} เพลง จาก ${totalRecords} records`,
+            `✅ ประมวลผลเสร็จ: ${successCount} เพลง จาก ${totalRecords} records`,
             "info"
           );
 
