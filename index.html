@@ -895,23 +895,18 @@
           downloadSection = document.createElement("div");
           downloadSection.id = "downloadSection";
           downloadSection.className = "card";
+          downloadSection.style.marginTop = "15px";
           downloadSection.innerHTML = `
             <div class="card-header">
               <h2>📥 ไฟล์ที่พร้อมดาวน์โหลด</h2>
             </div>
-            <div id="archiveList" style="margin-bottom: 15px;"></div>
-            <button class="btn btn-danger" id="clearArchivesBtn">🗑️ ลบไฟล์ทั้งหมด</button>
+            <div id="archiveList" style="margin: 0;"></div>
           `;
-          document
-            .querySelector(".container")
-            .insertBefore(downloadSection, document.querySelector(".footer"));
-          document
-            .getElementById("clearArchivesBtn")
-            .addEventListener("click", async () => {
-              await clearArchives();
-              log("🧹 ล้างไฟล์ archives ใน IndexedDB เสร็จสิ้น", "info");
-              renderArchiveList();
-            });
+          const mainCard = document.querySelector(".card");
+          mainCard.parentNode.insertBefore(
+            downloadSection,
+            mainCard.nextSibling
+          );
         }
         renderArchiveList();
       }
@@ -922,36 +917,37 @@
         listContainer.innerHTML = "";
         if (archives.length === 0) {
           listContainer.innerHTML =
-            "<p style='text-align: center; color: var(--gray);'>ไม่มีไฟล์ที่บันทึกไว้</p>";
+            "<p style='text-align: center; color: var(--gray); padding: 15px;'>ไม่มีไฟล์ที่บันทึกไว้</p>";
           return;
         }
         archives.forEach((archive) => {
           const item = document.createElement("div");
           item.style =
-            "display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border);";
+            "display: flex; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); gap: 10px;";
+          const date = new Date(archive.createdAt).toLocaleString("th-TH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
           item.innerHTML = `
-            <span>${archive.filename} (${(archive.size / 1024 / 1024).toFixed(
-            2
-          )} MB) - สร้างเมื่อ ${archive.createdAt}</span>
-            <div>
-              <button class="btn btn-primary" style="margin-right: 10px;" data-filename="${
-                archive.filename
-              }">ดาวน์โหลด</button>
-              <button class="btn btn-danger" data-filename="${
-                archive.filename
-              }">ลบ</button>
-            </div>
+            <button class="btn btn-primary" style="min-width: auto; padding: 6px 12px; font-size: 0.85rem; flex-shrink: 0;" data-filename="${
+              archive.filename
+            }">⬇️ ดาวน์โหลด</button>
+            <span style="flex: 1; font-size: 0.9rem; color: var(--dark);">${
+              archive.filename
+            }</span>
+            <span style="font-size: 0.85rem; color: var(--gray); white-space: nowrap;">${(
+              archive.size /
+              1024 /
+              1024
+            ).toFixed(2)} MB</span>
+            <span style="font-size: 0.85rem; color: var(--gray); white-space: nowrap;">${date}</span>
           `;
           item.querySelector(".btn-primary").addEventListener("click", () => {
             downloadFile(archive.blob, archive.filename);
           });
-          item
-            .querySelector(".btn-danger")
-            .addEventListener("click", async () => {
-              await deleteArchive(archive.filename);
-              log(`🗑️ ลบไฟล์ ${archive.filename} จาก IndexedDB`, "info");
-              renderArchiveList();
-            });
           listContainer.appendChild(item);
         });
       }
