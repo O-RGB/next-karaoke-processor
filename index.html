@@ -638,19 +638,6 @@
         createIndexZip: document.getElementById("createIndexZip"),
         performanceMode: document.getElementById("performanceMode"),
       };
-
-      // Error code mapping for user-friendly messages
-      const errorMessages = {
-        E001: "ไม่สามารถอ่าน header ของไฟล์ SONG.DBF ได้ กรุณาตรวจสอบว่าไฟล์มีโครงสร้างถูกต้องหรือไม่",
-        E002: "ไม่สามารถประมวลผล records ในไฟล์ SONG.DBF ได้ อาจเนื่องจากไฟล์เสียหายหรือขนาดใหญ่เกินไป",
-        E003: "การประมวลผลไฟล์ SONG.DBF ใช้เวลานานเกิน 5 นาที กรุณาลองลด batch size หรือใช้ performance mode",
-        E004: "ไม่พบไฟล์ SONG.DBF ในโฟลเดอร์ Data/ กรุณาตรวจสอบโฟลเดอร์ที่เลือก",
-        E005: "ไม่สามารถเข้าถึงไฟล์เพลง (midi/lyr/cur/emk) กรุณาตรวจสอบว่าไฟล์ครบถ้วนและอยู่ในโฟลเดอร์ที่ถูกต้อง",
-        E006: "การสร้างไฟล์ ZIP ล้มเหลว กรุณาตรวจสอบหน่วยความจำของเครื่องหรือลองใช้ performance mode",
-        E007: "การสร้าง search index ล้มเหลว กรุณาลองอีกครั้งหรือลดจำนวนเพลง",
-        E008: "เกิดข้อผิดพลาดใน Web Worker กรุณาลองรีเฟรชหน้าเว็บหรือตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
-      };
-
       // Accordion logic
       const accordions = [
         { toggle: "settingsToggle", content: "settingsContent", arrow: true },
@@ -666,7 +653,6 @@
           if (arrow) arrow.classList.toggle("open");
         });
       });
-
       function log(message, type = "info") {
         const timestamp = new Date().toLocaleTimeString("th-TH");
         const logEntry = document.createElement("div");
@@ -685,24 +671,19 @@
           elements.logBox.removeChild(elements.logBox.firstChild);
         }
       }
-
       function updateProgress(percent) {
         const rounded = Math.round(percent);
         elements.progressFill.style.width = `${rounded}%`;
         elements.progressFill.textContent = `${rounded}%`;
       }
-
       function updateStatus(text) {
         elements.statusText.textContent = text;
       }
-
       async function initDB() {
         return new Promise((resolve, reject) => {
           const request = indexedDB.open(DB_NAME, DB_VERSION);
-          request.onerror = (event) => {
-            log(`❌ [E008] IndexedDB error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("IndexedDB error: " + event.target.error);
-          };
           request.onsuccess = (event) => {
             db = event.target.result;
             resolve(db);
@@ -718,20 +699,16 @@
           };
         });
       }
-
       async function clearDBStore(storeName) {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([storeName], "readwrite");
           const store = transaction.objectStore(storeName);
           const request = store.clear();
           request.onsuccess = resolve;
-          request.onerror = (event) => {
-            log(`❌ [E008] Clear error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Clear error: " + event.target.error);
-          };
         });
       }
-
       async function storeRecord(record, id) {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([STORE_RECORDS], "readwrite");
@@ -739,39 +716,30 @@
           record._id = id;
           const request = store.put(record);
           request.onsuccess = resolve;
-          request.onerror = (event) => {
-            log(`❌ [E008] Store error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Store error: " + event.target.error);
-          };
         });
       }
-
       async function getRecord(id) {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([STORE_RECORDS]);
           const store = transaction.objectStore(STORE_RECORDS);
           const request = store.get(id);
           request.onsuccess = (event) => resolve(event.target.result);
-          request.onerror = (event) => {
-            log(`❌ [E008] Get error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Get error: " + event.target.error);
-          };
         });
       }
-
       async function getRecordsCount() {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([STORE_RECORDS]);
           const store = transaction.objectStore(STORE_RECORDS);
           const request = store.count();
           request.onsuccess = (event) => resolve(event.target.result);
-          request.onerror = (event) => {
-            log(`❌ [E008] Count error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Count error: " + event.target.error);
-          };
         });
       }
-
       async function storeBatch(batchId, batchData) {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([STORE_BATCHES], "readwrite");
@@ -779,39 +747,30 @@
           const data = { _batchId: batchId, data: batchData };
           const request = store.put(data);
           request.onsuccess = resolve;
-          request.onerror = (event) => {
-            log(`❌ [E008] Store batch error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Store batch error: " + event.target.error);
-          };
         });
       }
-
       async function getBatch(batchId) {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([STORE_BATCHES]);
           const store = transaction.objectStore(STORE_BATCHES);
           const request = store.get(batchId);
           request.onsuccess = (event) => resolve(event.target.result?.data);
-          request.onerror = (event) => {
-            log(`❌ [E008] Get batch error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Get batch error: " + event.target.error);
-          };
         });
       }
-
       async function getAllBatchKeys() {
         return new Promise((resolve, reject) => {
           const transaction = db.transaction([STORE_BATCHES]);
           const store = transaction.objectStore(STORE_BATCHES);
           const request = store.getAllKeys();
           request.onsuccess = (event) => resolve(event.target.result);
-          request.onerror = (event) => {
-            log(`❌ [E008] Get keys error: ${event.target.error}`, "error");
+          request.onerror = (event) =>
             reject("Get keys error: " + event.target.error);
-          };
         });
       }
-
       const workerCode = () => {
         self.importScripts(
           "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
@@ -827,11 +786,7 @@
             let offset = 32;
             self.postMessage({
               action: "log",
-              message: `📋 เริ่ม parse header ของ SONG.DBF: ${recordCount} records, ${fieldCount} fields, ขนาด buffer ${(
-                buffer.byteLength /
-                1024 /
-                1024
-              ).toFixed(2)} MB`,
+              message: `เริ่ม parse DBF header: ${recordCount} records, ${fieldCount} fields`,
               type: "info",
             });
             for (let i = 0; i < fieldCount; i++) {
@@ -851,21 +806,14 @@
               fields.push({ name, type, length });
               offset += 32;
             }
-            self.postMessage({
-              action: "log",
-              message: `✅ เสร็จสิ้นการ parse header: พบ ${fields.length} fields`,
-              type: "info",
-            });
             return { recordCount, headerLength, recordLength, fields };
           } catch (error) {
             self.postMessage({
               action: "error",
-              errorCode: "E001",
               message: `DBF Header Parsing Error: ${error.message} ที่ offset ${
                 offset || 0
-              }`,
-              suggestion:
-                "ตรวจสอบว่าไฟล์ SONG.DBF มีโครงสร้างถูกต้องหรือไม่ ลองใช้ DBF Viewer เพื่อตรวจสอบไฟล์",
+              } | Stack: ${error.stack || "ไม่มี"}`,
+              type: "error",
             });
             throw error;
           }
@@ -876,9 +824,19 @@
             try {
               return new TextDecoder(encoding).decode(bytes).trim();
             } catch (e) {
+              self.postMessage({
+                action: "log",
+                message: `⚠️ Decoding ล้มเหลวสำหรับ encoding ${encoding}: ${e.message}. ลอง encoding ถัดไป`,
+                type: "warning",
+              });
               continue;
             }
           }
+          self.postMessage({
+            action: "log",
+            message: `⚠️ ไม่สามารถ decode ได้หลังลองทุก encoding`,
+            type: "warning",
+          });
           return "[ไม่สามารถถอดรหัสได้]";
         }
         function parseDBFRecords(buffer, header) {
@@ -886,9 +844,10 @@
             const records = [];
             const dataStart = header.headerLength;
             const uint8Array = new Uint8Array(buffer);
+            const startTime = Date.now();
             self.postMessage({
               action: "log",
-              message: `📋 เริ่ม parse ${header.recordCount} records จาก offset ${dataStart}`,
+              message: `เริ่ม parse ${header.recordCount} records จาก offset ${dataStart}`,
               type: "info",
             });
             for (let i = 0; i < header.recordCount; i++) {
@@ -896,10 +855,8 @@
               if (recordOffset + header.recordLength > buffer.byteLength) {
                 self.postMessage({
                   action: "error",
-                  errorCode: "E002",
-                  message: `DBF Records Parsing Error: Offset ${recordOffset} เกินขนาด buffer (${buffer.byteLength})`,
-                  suggestion:
-                    "ไฟล์อาจเสียหายหรือมีขนาดไม่ถูกต้อง กรุณาตรวจสอบไฟล์ SONG.DBF",
+                  message: `DBF Records Parsing Error: Offset ${recordOffset} เกินขนาด buffer (${buffer.byteLength}) ที่ record ${i}`,
+                  type: "error",
                 });
                 break;
               }
@@ -911,35 +868,59 @@
                   fieldOffset,
                   fieldOffset + field.length
                 );
-                record[field.name] = tryDecode(fieldBytes);
+                try {
+                  record[field.name] = tryDecode(fieldBytes);
+                } catch (e) {
+                  self.postMessage({
+                    action: "log",
+                    message: `⚠️ Decoding ล้มเหลวสำหรับ field ${field.name} ใน record ${i}: ${e.message}. ใช้ fallback "[ไม่สามารถถอดรหัสได้]"`,
+                    type: "warning",
+                  });
+                  record[field.name] = "[ไม่สามารถถอดรหัสได้]";
+                }
                 fieldOffset += field.length;
               }
               records.push(record);
               if (i % 500 === 0) {
+                const elapsed = (Date.now() - startTime) / 1000;
                 self.postMessage({
                   action: "log",
-                  message: `⏳ ประมวลผล ${i} จาก ${
+                  message: `ประมวลผล ${i} จาก ${
                     header.recordCount
-                  } records (${((i / header.recordCount) * 100).toFixed(1)}%)`,
+                  } records (ใช้เวลา ${elapsed.toFixed(2)} วินาที)`,
                   type: "info",
                 });
+                self.postMessage({
+                  action: "progress",
+                  message: Math.round((i / header.recordCount) * 100),
+                });
+                // Throttle เพื่อลด CPU load
+                if (i % 5000 === 0) {
+                  self.postMessage({
+                    action: "log",
+                    message: `หยุดพักชั่วคราว 100ms เพื่อลดการใช้งาน CPU`,
+                    type: "info",
+                  });
+                  setTimeout(() => {}, 100);
+                }
               }
             }
+            const totalElapsed = (Date.now() - startTime) / 1000;
             self.postMessage({
               action: "log",
-              message: `✅ เสร็จสิ้นการ parse records: ${records.length} เพลง`,
+              message: `✅ เสร็จสิ้นการ parse ${
+                records.length
+              } records ใน ${totalElapsed.toFixed(2)} วินาที`,
               type: "info",
             });
             return records;
           } catch (error) {
             self.postMessage({
               action: "error",
-              errorCode: "E002",
               message: `DBF Records Parsing Error: ${
                 error.message
-              } ที่ record ที่ ${i || 0}`,
-              suggestion:
-                "ไฟล์อาจเสียหายหรือมี encoding ไม่ถูกต้อง ลองตรวจสอบด้วยเครื่องมือเช่น DBF Viewer",
+              } ที่ record ${i || 0} | Stack: ${error.stack || "ไม่มี"}`,
+              type: "error",
             });
             throw error;
           }
@@ -952,7 +933,7 @@
             zip.file("song.cur", cur);
             self.postMessage({
               action: "log",
-              message: `📦 เริ่มสร้างไฟล์ ZIP สำหรับเพลง (performance mode: ${performanceMode})`,
+              message: `กำลังสร้าง MIDI ZIP (performanceMode: ${performanceMode})`,
               type: "info",
             });
             const zipData = await zip.generateAsync({
@@ -962,19 +943,19 @@
             });
             self.postMessage({
               action: "log",
-              message: `✅ สร้างไฟล์ ZIP สำเร็จ: ${(
+              message: `✅ สร้าง MIDI ZIP สำเร็จ (${(
                 zipData.length / 1024
-              ).toFixed(2)} KB`,
+              ).toFixed(2)} KB)`,
               type: "info",
             });
             return zipData;
           } catch (error) {
             self.postMessage({
               action: "error",
-              errorCode: "E006",
-              message: `MIDI ZIP Creation Error: ${error.message}`,
-              suggestion:
-                "หน่วยความจำอาจไม่เพียงพอ ลองใช้ performance mode หรือลด batch size",
+              message: `MIDI ZIP Creation Error: ${error.message} | Stack: ${
+                error.stack || "ไม่มี"
+              }`,
+              type: "error",
             });
             throw error;
           }
@@ -983,7 +964,7 @@
           try {
             self.postMessage({
               action: "log",
-              message: `🔍 เริ่มสร้าง search index สำหรับ ${records.length} เพลง`,
+              message: `เริ่มสร้าง search index สำหรับ ${records.length} records`,
               type: "info",
             });
             const wordMap = {};
@@ -1045,18 +1026,19 @@
             };
             self.postMessage({
               action: "log",
-              message: `✅ สร้าง search index เสร็จ: ${
-                sortedWords.length
-              } คำ, ${chunkId + 1} chunks`,
+              message: `✅ สร้าง search index เสร็จสิ้น: ${
+                Object.keys(chunks).length
+              } chunks`,
               type: "info",
             });
             return { masterIndex, chunks };
           } catch (error) {
             self.postMessage({
               action: "error",
-              errorCode: "E007",
-              message: `Search Index Building Error: ${error.message}`,
-              suggestion: "ลองลดจำนวนเพลงหรือตรวจสอบหน่วยความจำของเครื่อง",
+              message: `Search Index Building Error: ${
+                error.message
+              } | Stack: ${error.stack || "ไม่มี"}`,
+              type: "error",
             });
             throw error;
           }
@@ -1083,33 +1065,22 @@
           } catch (error) {
             self.postMessage({
               action: "error",
-              errorCode: "E008",
-              message: `Worker Error: ${error.message}`,
-              suggestion:
-                "ลองรีเฟรชหน้าเว็บหรือตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
+              message: `Worker Error: ${error.message} | Stack: ${
+                error.stack || "ไม่มี"
+              }`,
+              type: "error",
             });
           }
         };
       };
-
       const blob = new Blob([`(${workerCode.toString()})()`], {
         type: "application/javascript",
       });
       const workerURL = URL.createObjectURL(blob);
       worker = new Worker(workerURL);
-
       worker.onmessage = (e) => {
-        const {
-          action,
-          message,
-          errorCode,
-          suggestion,
-          header,
-          records,
-          zipData,
-          indexData,
-          type,
-        } = e.data;
+        const { action, message, header, records, zipData, indexData, type } =
+          e.data;
         if (action === "parseDBFResult") {
           workerParseDBFResult(header, records);
         } else if (action === "createMIDIZipResult") {
@@ -1118,19 +1089,16 @@
           workerBuildSearchIndexResult(indexData);
         } else if (action === "log") {
           log(message, type);
+        } else if (action === "progress") {
+          updateStatus(`กำลัง parse ไฟล์ DBF: ${message}%`);
         } else if (action === "error") {
-          const userMessage = errorCode ? errorMessages[errorCode] : message;
-          log(`❌ [${errorCode || "E008"}] ${userMessage}`, "error");
-          if (suggestion) {
-            log(`💡 คำแนะนำ: ${suggestion}`, "warning");
-          }
-          updateStatus(`❌ เกิดข้อผิดพลาด: ${userMessage}`);
+          log(`❌ Worker Error: ${message}`, "error");
+          updateStatus("❌ เกิดข้อผิดพลาดใน Worker");
           isProcessing = false;
           elements.startBtn.disabled = false;
           elements.stopBtn.disabled = true;
         }
       };
-
       async function getFileByPath(pathParts) {
         const fullPath = pathParts.join("/");
         try {
@@ -1139,32 +1107,25 @@
             for (let i = 0; i < pathParts.length - 1; i++) {
               currentHandle = await currentHandle.getDirectoryHandle(
                 pathParts[i],
-                { create: false }
+                {
+                  create: false,
+                }
               );
             }
             const fileName = pathParts[pathParts.length - 1];
             const fileHandle = await currentHandle.getFileHandle(fileName);
             const file = await fileHandle.getFile();
-            log(
-              `📄 อ่านไฟล์ ${fullPath} สำเร็จ: ${(file.size / 1024).toFixed(
-                2
-              )} KB`,
-              "info"
-            );
             return { arrayBuffer: () => file.arrayBuffer() };
           }
           return null;
         } catch (e) {
-          log(`❌ [E005] ไม่พบไฟล์ ${fullPath}: ${e.message}`, "error");
-          log(`💡 คำแนะนำ: ตรวจสอบว่าไฟล์อยู่ในโฟลเดอร์ที่ถูกต้อง`, "warning");
+          log(`⚠️ ไม่พบไฟล์ ${fullPath}: ${e.message}`, "warning");
           return null;
         }
       }
-
       async function getSongFiles(track) {
         if (!track.CODE || !track.TYPE || !track.SUB_TYPE) {
           log(`⚠️ Track ข้อมูลไม่ครบ: ${JSON.stringify(track)}`, "warning");
-          log(`💡 คำแนะนำ: ตรวจสอบข้อมูลในไฟล์ SONG.DBF`, "warning");
           return null;
         }
         const code = track.CODE;
@@ -1181,6 +1142,7 @@
               emkFile = await getFileByPath([...primaryPath, `${code}.emk`]);
             }
             if (emkFile) {
+              log(`✅ พบไฟล์ EMK: ${code}.emk`, "info");
               return { emk: await emkFile.arrayBuffer() };
             }
           } else if (track.SUB_TYPE === "NCN") {
@@ -1206,63 +1168,58 @@
                 lyrFile.arrayBuffer(),
                 curFile.arrayBuffer(),
               ]);
+              log(`✅ พบไฟล์ NCN: ${code}.mid, .lyr, .cur`, "info");
               return { midi, lyr, cur };
             }
           }
-          log(`❌ [E005] ไม่พบไฟล์เพลงสำหรับ CODE: ${code}`, "error");
-          log(
-            `💡 คำแนะนำ: ตรวจสอบโฟลเดอร์ Songs/${track.TYPE}/${track.SUB_TYPE}`,
-            "warning"
-          );
+          log(`⚠️ ไม่พบไฟล์สำหรับ track ${code}`, "warning");
           return null;
         } catch (e) {
           log(
-            `❌ [E005] Error fetching song files for ${code}: ${e.message}`,
+            `❌ Error fetching song files for ${code}: ${e.message} | Stack: ${
+              e.stack || "ไม่มี"
+            }`,
             "error"
-          );
-          log(
-            `💡 คำแนะนำ: ตรวจสอบว่าไฟล์ครบถ้วนและอยู่ในโฟลเดอร์ที่ถูกต้อง`,
-            "warning"
           );
           return null;
         }
       }
-
       let workerParseDBFResultResolve = null;
       let workerCreateMIDIZipResultResolve = null;
       let workerBuildSearchIndexResultResolve = null;
-
       function workerParseDBFResult(header, records) {
         if (workerParseDBFResultResolve) {
           workerParseDBFResultResolve({ header, records });
           workerParseDBFResultResolve = null;
         }
       }
-
       function workerCreateMIDIZipResult(zipData) {
         if (workerCreateMIDIZipResultResolve) {
           workerCreateMIDIZipResultResolve(zipData);
           workerCreateMIDIZipResultResolve = null;
         }
       }
-
       function workerBuildSearchIndexResult(indexData) {
         if (workerBuildSearchIndexResultResolve) {
           workerBuildSearchIndexResultResolve(indexData);
           workerBuildSearchIndexResultResolve = null;
         }
       }
-
       async function parseDBF(buffer) {
         return new Promise((resolve, reject) => {
           workerParseDBFResultResolve = resolve;
           worker.postMessage({ action: "parseDBF", data: { buffer } });
-          setTimeout(() => {
-            reject(new Error("[E003] DBF parsing timeout หลังจาก 5 นาที"));
-          }, 300000);
+          setTimeout(
+            () =>
+              reject(
+                new Error(
+                  "DBF parsing timeout หลังจาก 10 นาที: ไฟล์อาจใหญ่เกินไปหรือเครื่องช้า"
+                )
+              ),
+            600000
+          ); // เพิ่มเป็น 10 นาที
         });
       }
-
       async function createMIDIZip(midi, lyr, cur, performanceMode) {
         return new Promise((resolve, reject) => {
           workerCreateMIDIZipResultResolve = resolve;
@@ -1271,25 +1228,22 @@
             data: { midi, lyr, cur, performanceMode },
           });
           setTimeout(
-            () => reject(new Error("[E006] MIDI ZIP creation timeout")),
+            () => reject(new Error("MIDI ZIP creation timeout")),
             10000
           );
         });
       }
-
       async function buildSearchIndex(records) {
         return new Promise((resolve, reject) => {
           workerBuildSearchIndexResultResolve = resolve;
           worker.postMessage({ action: "buildSearchIndex", data: { records } });
           setTimeout(
-            () => reject(new Error("[E007] Search index building timeout")),
+            () => reject(new Error("Search index building timeout")),
             60000
           );
         });
       }
-
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
       function downloadFile(blob, filename) {
         try {
           const url = URL.createObjectURL(blob);
@@ -1300,84 +1254,61 @@
           a.click();
           document.body.removeChild(a);
           setTimeout(() => URL.revokeObjectURL(url), 100);
-          log(
-            `✅ ดาวน์โหลด ${filename} สำเร็จ: ${(
-              blob.size /
-              1024 /
-              1024
-            ).toFixed(2)} MB`,
-            "info"
-          );
+          log(`✅ ดาวน์โหลดไฟล์ ${filename} สำเร็จ`, "info");
         } catch (e) {
           log(
-            `❌ [E006] Error downloading file ${filename}: ${e.message}`,
+            `❌ Error downloading file ${filename}: ${e.message} | Stack: ${
+              e.stack || "ไม่มี"
+            }`,
             "error"
           );
-          log(`💡 คำแนะนำ: ตรวจสอบหน่วยความจำหรือลองรีเฟรชหน้าเว็บ`, "warning");
         }
       }
-
       async function processKaraoke() {
         shouldStop = false;
         isProcessing = true;
         try {
-          updateStatus("🚀 เริ่มต้นการประมวลผล...");
-          log("📋 เตรียมฐานข้อมูล IndexedDB...", "info");
           await initDB();
           await clearDBStore(STORE_RECORDS);
           await clearDBStore(STORE_BATCHES);
           if (!rootDirHandle) {
-            throw new Error("[E004] กรุณาเลือกโฟลเดอร์ก่อน");
+            throw new Error("กรุณาเลือกโฟลเดอร์ก่อน");
           }
-          updateStatus("📂 อ่านไฟล์ SONG.DBF...");
+          updateStatus("กำลังอ่านไฟล์ SONG.DBF...");
           log("📖 อ่านไฟล์ Data/SONG.DBF", "info");
           const dbfFile = await getFileByPath(["Data", "SONG.DBF"]);
           if (!dbfFile) {
-            throw new Error("[E004] ไม่พบไฟล์ Data/SONG.DBF");
+            throw new Error("ไม่พบไฟล์ Data/SONG.DBF ในโฟลเดอร์ที่เลือก");
           }
           const dbfBuffer = await dbfFile.arrayBuffer();
           updateProgress(5);
-          updateStatus(
-            `📋 อ่านไฟล์ SONG.DBF สำเร็จ (${(
-              dbfBuffer.byteLength /
-              1024 /
-              1024
-            ).toFixed(2)} MB)`
-          );
           log(
-            `✅ อ่านไฟล์ SONG.DBF สำเร็จ: ${(
+            `✅ อ่านไฟล์ SONG.DBF สำเร็จ (${(
               dbfBuffer.byteLength /
               1024 /
               1024
-            ).toFixed(2)} MB`,
+            ).toFixed(2)} MB)`,
             "info"
           );
-          log("🔍 เริ่ม parse DBF header...", "info");
+          updateStatus("กำลังวิเคราะห์โครงสร้าง DBF...");
+          log("🔍 วิเคราะห์ DBF header...", "info");
           let { header, records } = await parseDBF(dbfBuffer);
-          updateProgress(10);
-          updateStatus(`✅ Parse SONG.DBF เสร็จ: พบ ${records.length} เพลง`);
           log(
             `✅ พบ ${header.recordCount} records, ${header.fields.length} fields`,
             "info"
           );
-          log(`✅ Parse สำเร็จ: ${records.length} เพลง`, "info");
-          log("💾 บันทึก records ลง IndexedDB...", "info");
+          updateProgress(10);
+          updateStatus("กำลังบันทึกข้อมูลลงฐานข้อมูล...");
+          log(`💾 บันทึก ${records.length} records ลง IndexedDB...`, "info");
           for (let i = 0; i < records.length; i++) {
             await storeRecord(records[i], i);
-            if (i % 500 === 0) {
-              log(
-                `⏳ บันทึก ${i} จาก ${records.length} records ลง IndexedDB`,
-                "info"
-              );
+            if (i % 1000 === 0) {
+              updateStatus(`บันทึก record ${i}/${records.length}`);
             }
           }
           records = null;
           updateProgress(15);
-          updateStatus(
-            `💾 บันทึก ${records.length} records ลง IndexedDB เสร็จสิ้น`
-          );
-          log(`✅ บันทึก records ทั้งหมดลง IndexedDB สำเร็จ`, "info");
-          if (shouldStop) throw new Error("[E999] หยุดโดยผู้ใช้");
+          if (shouldStop) throw new Error("หยุดโดยผู้ใช้");
           const config = {
             batchSize: parseInt(elements.batchSize.value),
             zipSizeLimit: parseInt(elements.zipSizeLimit.value) * 1024 * 1024,
@@ -1387,16 +1318,16 @@
             performanceMode: elements.performanceMode.checked,
           };
           log(
-            `⚙️ การตั้งค่า: Batch=${config.batchSize} เพลง, ZIP Limit=${(
+            `⚙️ การตั้งค่า: Batch=${config.batchSize}, ZIP Limit=${(
               config.zipSizeLimit /
               1024 /
               1024
-            ).toFixed(0)} MB, Throttle=${config.cpuThrottle} ms, Performance=${
+            ).toFixed(0)}MB, Throttle=${config.cpuThrottle}ms, Performance=${
               config.performanceMode
             }`,
             "info"
           );
-          updateStatus("🎵 เริ่มประมวลผลเพลง...");
+          updateStatus("กำลังประมวลผลไฟล์เพลง...");
           const totalRecords = await getRecordsCount();
           let successCount = 0;
           let currentBatch = [];
@@ -1406,20 +1337,17 @@
           const parallelBatchSize = config.performanceMode ? 50 : 20;
           const compressionLevel = config.performanceMode ? 1 : 3;
           for (let i = 0; i < totalRecords; i += parallelBatchSize) {
-            if (shouldStop) throw new Error("[E999] หยุดโดยผู้ใช้");
+            if (shouldStop) throw new Error("หยุดโดยผู้ใช้");
             const end = Math.min(i + parallelBatchSize, totalRecords);
-            updateStatus(
-              `🎵 ประมวลผลเพลง ${i}-${end} จาก ${totalRecords} (${(
-                (end / totalRecords) *
-                100
-              ).toFixed(1)}%)`
-            );
             const batchPromises = [];
             for (let j = i; j < end; j++) {
               batchPromises.push(
                 (async () => {
                   const track = await getRecord(j);
-                  if (!track) return null;
+                  if (!track) {
+                    log(`⚠️ ไม่พบ record ที่ index ${j}`, "warning");
+                    return null;
+                  }
                   try {
                     const files = await getSongFiles(track);
                     if (!files) return null;
@@ -1431,6 +1359,7 @@
                       files.lyr &&
                       files.cur
                     ) {
+                      updateStatus(`สร้าง ZIP สำหรับ track ${j} (NCN)`);
                       const zip = new JSZip();
                       zip.file("song.mid", files.midi);
                       zip.file("song.lyr", files.lyr);
@@ -1451,6 +1380,12 @@
                     successCount++;
                     return { trackId: j, content, filename };
                   } catch (e) {
+                    log(
+                      `❌ Error processing track ${j}: ${e.message} | Stack: ${
+                        e.stack || "ไม่มี"
+                      }`,
+                      "error"
+                    );
                     return null;
                   }
                 })()
@@ -1471,14 +1406,12 @@
               (config.createZips && currentBatchSize >= config.zipSizeLimit)
             ) {
               if (config.createZips && currentBatchZip) {
+                updateStatus(`บันทึก batch ${batchIndex}...`);
                 log(
                   `💾 บันทึก batch ${batchIndex}: ${
                     currentBatch.length
-                  } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)} MB)`,
+                  } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)}MB)`,
                   "info"
-                );
-                updateStatus(
-                  `📦 บันทึก batch ${batchIndex}: ${currentBatch.length} เพลง`
                 );
                 const batchData = await currentBatchZip.generateAsync({
                   type: "uint8array",
@@ -1497,11 +1430,9 @@
             }
             const progress = 15 + Math.floor((end / totalRecords) * 70);
             updateProgress(progress);
+            updateStatus(`ประมวลผลเพลง: ${successCount}/${totalRecords}`);
             log(
-              `⏳ ประมวลผล: ${successCount}/${totalRecords} เพลง (${(
-                (successCount / totalRecords) *
-                100
-              ).toFixed(1)}%)`,
+              `⏳ ประมวลผล: ${successCount}/${totalRecords} (${end} records)`,
               "info"
             );
             if (
@@ -1516,14 +1447,10 @@
             }
           }
           if (currentBatch.length > 0 && config.createZips && currentBatchZip) {
+            updateStatus(`บันทึก batch สุดท้าย ${batchIndex}...`);
             log(
-              `💾 บันทึก batch สุดท้าย ${batchIndex}: ${
-                currentBatch.length
-              } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)} MB)`,
+              `💾 บันทึก batch สุดท้าย ${batchIndex}: ${currentBatch.length} เพลง`,
               "info"
-            );
-            updateStatus(
-              `📦 บันทึก batch สุดท้าย ${batchIndex}: ${currentBatch.length} เพลง`
             );
             const batchData = await currentBatchZip.generateAsync({
               type: "uint8array",
@@ -1536,16 +1463,13 @@
             currentBatchZip = null;
           }
           updateProgress(85);
-          updateStatus(
-            `✅ ประมวลผลเพลงสำเร็จ: ${successCount}/${totalRecords} เพลง`
-          );
           log(
-            `✅ ประมวลผลเสร็จ: ${successCount} เพลง จาก ${totalRecords} records`,
+            `✅ ประมวลผลเพลงเสร็จ: ${successCount} จาก ${totalRecords} records`,
             "info"
           );
           if (config.createZips) {
-            log("📦 เริ่มสร้าง karaoke archives...", "info");
-            updateStatus("📦 สร้างไฟล์ karaoke_*.zip...");
+            updateStatus("กำลังสร้างไฟล์ karaoke_*.zip...");
+            log("📦 สร้าง karaoke archives...", "info");
             let archiveIndex = 0;
             let currentArchive = new JSZip();
             let currentArchiveSize = 0;
@@ -1556,13 +1480,7 @@
                 currentArchiveSize + batchData.length > config.zipSizeLimit &&
                 currentArchiveSize > 0
               ) {
-                updateStatus(
-                  `📦 สร้าง karaoke_${archiveIndex}.zip (${(
-                    currentArchiveSize /
-                    1024 /
-                    1024
-                  ).toFixed(2)} MB)`
-                );
+                updateStatus(`บันทึก karaoke_${archiveIndex}.zip...`);
                 const archiveData = await currentArchive.generateAsync({
                   type: "blob",
                   compression: config.performanceMode ? "DEFLATE" : "DEFLATE",
@@ -1571,6 +1489,14 @@
                     : { level: 6 },
                 });
                 downloadFile(archiveData, `karaoke_${archiveIndex}.zip`);
+                log(
+                  `✅ ดาวน์โหลด karaoke_${archiveIndex}.zip (${(
+                    archiveData.size /
+                    1024 /
+                    1024
+                  ).toFixed(2)}MB)`,
+                  "info"
+                );
                 archiveIndex++;
                 currentArchive = new JSZip();
                 currentArchiveSize = 0;
@@ -1579,25 +1505,27 @@
               currentArchiveSize += batchData.length;
             }
             if (currentArchiveSize > 0) {
-              updateStatus(
-                `📦 สร้าง karaoke_${archiveIndex}.zip (${(
-                  currentArchiveSize /
-                  1024 /
-                  1024
-                ).toFixed(2)} MB)`
-              );
+              updateStatus(`บันทึก karaoke_${archiveIndex}.zip...`);
               const archiveData = await currentArchive.generateAsync({
                 type: "blob",
                 compression: "DEFLATE",
                 compressionOptions: { level: config.performanceMode ? 1 : 6 },
               });
               downloadFile(archiveData, `karaoke_${archiveIndex}.zip`);
+              log(
+                `✅ ดาวน์โหลด karaoke_${archiveIndex}.zip (${(
+                  archiveData.size /
+                  1024 /
+                  1024
+                ).toFixed(2)}MB)`,
+                "info"
+              );
             }
           }
           updateProgress(95);
           if (config.createIndexZip) {
-            log("🔍 เริ่มสร้าง search index...", "info");
-            updateStatus("🔍 สร้างไฟล์ index.zip...");
+            updateStatus("กำลังสร้าง index.zip...");
+            log("🔍 สร้าง search index...", "info");
             const recordsForIndex = [];
             const total = await getRecordsCount();
             const indexBatchSize = 500;
@@ -1607,11 +1535,7 @@
                 const record = await getRecord(j);
                 if (record) recordsForIndex.push(record);
               }
-              log(`⏳ อ่าน records ${i}-${end} สำหรับ search index`, "info");
             }
-            updateStatus(
-              `🔍 ประมวลผล search index สำหรับ ${recordsForIndex.length} เพลง`
-            );
             const { masterIndex, chunks } = await buildSearchIndex(
               recordsForIndex
             );
@@ -1625,31 +1549,44 @@
             }
             const indexZipData = await indexZip.generateAsync({ type: "blob" });
             downloadFile(indexZipData, "index.zip");
-            updateStatus(
-              `✅ สร้าง index.zip เสร็จ: ${(indexZipData.size / 1024).toFixed(
+            log(
+              `✅ ดาวน์โหลด index.zip (${(indexZipData.size / 1024).toFixed(
                 2
-              )} KB`
+              )}KB)`,
+              "info"
             );
           }
           updateProgress(100);
-          updateStatus(`🎉 การประมวลผลเสร็จสมบูรณ์: ${successCount} เพลง`);
+          updateStatus("🎉 เสร็จสิ้นการประมวลผล!");
           log("🎉 การประมวลผลเสร็จสมบูรณ์!", "info");
         } catch (error) {
-          const errorCode = error.message.match(/\[E\d+\]/)?.[0] || "E008";
-          const userMessage = errorMessages[errorCode] || error.message;
-          if (errorCode === "[E999]") {
-            log("⏹️ การทำงานหยุดลงตามคำสั่ง", "warning");
+          if (error.message === "หยุดโดยผู้ใช้") {
+            log("⏹️ การทำงานหยุดลงตามคำสั่งผู้ใช้", "warning");
             updateStatus("⏹️ หยุดการทำงานแล้ว");
           } else {
-            log(`❌ [${errorCode}] ${userMessage}`, "error");
             log(
-              `💡 คำแนะนำ: ${
-                errorMessages[errorCode] ||
-                "ลองรีเฟรชหน้าเว็บหรือตรวจสอบไฟล์และการตั้งค่า"
+              `❌ เกิดข้อผิดพลาดร้ายแรง: ${error.message} | Stack: ${
+                error.stack || "ไม่มี stack trace"
               }`,
-              "warning"
+              "error"
             );
-            updateStatus(`❌ เกิดข้อผิดพลาด: ${userMessage}`);
+            if (error.message.includes("DBF parsing timeout")) {
+              log(
+                "⚠️ สาเหตุที่เป็นไปได้: ไฟล์ SONG.DBF อาจมีขนาดใหญ่เกินไป (จำนวน records เยอะหรือไฟล์ >100MB). แนะนำ: ลองใช้เครื่องที่มีประสิทธิภาพสูงขึ้น, เพิ่ม CPU Throttle, หรือแบ่งไฟล์ DBF เป็นส่วนย่อยๆ.",
+                "warning"
+              );
+            } else if (error.message.includes("ไม่พบไฟล์")) {
+              log(
+                "⚠️ สาเหตุที่เป็นไปได้: โฟลเดอร์ที่เลือกไม่มีไฟล์ SONG.DBF หรือโครงสร้างโฟลเดอร์ไม่ถูกต้อง. กรุณาตรวจสอบว่าเลือกโฟลเดอร์คาราโอเกะที่ถูกต้อง.",
+                "warning"
+              );
+            } else {
+              log(
+                "⚠️ สาเหตุที่เป็นไปได้: ไฟล์เสียหาย, เบราว์เซอร์ไม่รองรับ, หรือหน่วยความจำไม่เพียงพอ. ลองใช้ Chrome ล่าสุดและตรวจสอบว่าไฟล์ครบถ้วน.",
+                "warning"
+              );
+            }
+            updateStatus(`❌ เกิดข้อผิดพลาด: ${error.message}`);
           }
         } finally {
           isProcessing = false;
@@ -1660,40 +1597,40 @@
           log("🧹 ล้างฐานข้อมูล IndexedDB เสร็จสิ้น", "info");
         }
       }
-
       elements.selectFolderBtn.addEventListener("click", async () => {
         if ("showDirectoryPicker" in window) {
           try {
             const handle = await window.showDirectoryPicker();
             rootDirHandle = handle;
             elements.inputInfo.textContent = `📁 โฟลเดอร์: ${handle.name}`;
+            elements.inputInfo.classList.add("active");
             log(`📁 เลือกโฟลเดอร์: ${handle.name}`, "info");
-            updateStatus(`📁 พร้อมประมวลผลโฟลเดอร์: ${handle.name}`);
           } catch (err) {
-            log("⚠️ ผู้ใช้ยกเลิกการเลือกโฟลเดอร์", "warning");
+            log(`⚠️ ผู้ใช้ยกเลิกการเลือกโฟลเดอร์: ${err.message}`, "warning");
             updateStatus("⚠️ ไม่ได้เลือกโฟลเดอร์");
           }
         } else {
-          log("❌ [E008] เบราว์เซอร์ไม่รองรับ File System Access API", "error");
-          log("💡 คำแนะนำ: ใช้ Chrome หรือ Edge เวอร์ชันล่าสุด", "warning");
+          log(
+            "❌ เบราว์เซอร์ไม่รองรับ File System Access API (ต้องการ Chrome 86+ หรือ Edge 86+)",
+            "error"
+          );
+          updateStatus("❌ เบราว์เซอร์ไม่รองรับ API");
           alert("เบราว์เซอร์ของคุณไม่รองรับ File System Access API");
-          updateStatus("❌ เบราว์เซอร์ไม่รองรับ File System Access API");
         }
       });
-
       elements.startBtn.addEventListener("click", () => {
         elements.logBox.innerHTML = "";
         updateProgress(0);
+        updateStatus("เริ่มประมวลผล...");
         elements.startBtn.disabled = true;
         elements.stopBtn.disabled = false;
-        updateStatus("🚀 เริ่มการประมวลผล...");
+        log("🚀 เริ่มการประมวลผลไฟล์คาราโอเกะ", "info");
         processKaraoke();
       });
-
       elements.stopBtn.addEventListener("click", () => {
         shouldStop = true;
-        log("⏹️ กำลังส่งคำสั่งหยุด...", "warning");
-        updateStatus("⏹️ กำลังหยุดการประมวลผล...");
+        log("⏹️ ส่งคำสั่งหยุดการประมวลผล...", "warning");
+        updateStatus("กำลังหยุดการประมวลผล...");
         elements.stopBtn.disabled = true;
       });
     </script>
