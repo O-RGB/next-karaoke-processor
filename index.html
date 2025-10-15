@@ -1346,21 +1346,11 @@
               batchPromises.push(
                 (async () => {
                   const track = await getRecord(j);
-                  if (!track) {
-                    processedCount++; // เพิ่ม index แม้ไม่มี track
-                    return null;
-                  }
-
-                  // กำหนด index ก่อนประมวลผล เพื่อให้ตำแหน่งตรงกันเสมอ
-                  const currentIndex = processedCount;
-                  processedCount++;
+                  if (!track) return null;
 
                   try {
                     const files = await getSongFiles(track);
-                    if (!files) {
-                      // ไม่มีไฟล์ แต่ index ถูกกำหนดไปแล้ว (ข้าม index นี้)
-                      return null;
-                    }
+                    if (!files) return null;
 
                     let content = null;
                     let filename = "";
@@ -1380,83 +1370,83 @@
                         compression: "DEFLATE",
                         compressionOptions: { level: compressionLevel },
                       });
-                      filename = `${currentIndex}.zip`;
+                      filename = `${processedCount}.zip`;
                     } else if (track.SUB_TYPE === "EMK" && files.emk) {
                       content = new Uint8Array(files.emk);
-                      filename = `${currentIndex}.emk`;
+                      filename = `${processedCount}.emk`;
                     }
 
-                    // บันทึก index ที่ถูกต้อง
-                    track._originalIndex = currentIndex;
+                    track._originalIndex = processedCount;
                     track._superIndex = batchIndex;
 
                     await storeRecord(track, j);
 
+                    processedCount++;
+
                     return { trackId: j, content, filename };
                   } catch (e) {
-                    // เกิด error แต่ index ถูกข้ามไปแล้ว
                     return null;
                   }
                 })()
               );
+            }
 
-              const results = await Promise.all(batchPromises);
-              results.forEach((result) => {
-                if (result && result.content) {
-                  currentBatch.push(result);
+            const results = await Promise.all(batchPromises);
+            results.forEach((result) => {
+              if (result && result.content) {
+                currentBatch.push(result);
 
-                  if (config.createZips && currentBatchZip) {
-                    currentBatchZip.file(result.filename, result.content);
-                    currentBatchSize += result.content.length;
-                  }
-                }
-              });
-
-              if (
-                currentBatch.length >= config.batchSize ||
-                (config.createZips && currentBatchSize >= config.zipSizeLimit)
-              ) {
                 if (config.createZips && currentBatchZip) {
-                  log(
-                    `💾 บันทึก batch ${batchIndex}: ${
-                      currentBatch.length
-                    } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)}MB)`,
-                    "info"
-                  );
-                  const batchData = await currentBatchZip.generateAsync({
-                    type: "uint8array",
-                    compression: config.performanceMode ? "DEFLATE" : "DEFLATE",
-                    compressionOptions: config.performanceMode
-                      ? { level: 1 }
-                      : { level: 6 },
-                  });
-                  await storeBatch(batchIndex, batchData);
-                  currentBatchZip = null;
+                  currentBatchZip.file(result.filename, result.content);
+                  currentBatchSize += result.content.length;
                 }
-
-                batchIndex++;
-                currentBatch = [];
-                currentBatchZip = config.createZips ? new JSZip() : null;
-                currentBatchSize = 0;
               }
+            });
 
-              const progress = 15 + Math.floor((end / totalRecords) * 70);
-              updateProgress(progress);
-              log(
-                `⏳ ประมวลผล: ${processedCount}/${totalRecords} (${end} records)`,
-                "info"
-              );
-
-              if (
-                (i % 100 === 0 || end >= totalRecords) &&
-                config.cpuThrottle > 0
-              ) {
-                await sleep(
-                  config.performanceMode
-                    ? Math.min(config.cpuThrottle, 1)
-                    : config.cpuThrottle
+            if (
+              currentBatch.length >= config.batchSize ||
+              (config.createZips && currentBatchSize >= config.zipSizeLimit)
+            ) {
+              if (config.createZips && currentBatchZip) {
+                log(
+                  `💾 บันทึก batch ${batchIndex}: ${
+                    currentBatch.length
+                  } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)}MB)`,
+                  "info"
                 );
+                const batchData = await currentBatchZip.generateAsync({
+                  type: "uint8array",
+                  compression: config.performanceMode ? "DEFLATE" : "DEFLATE",
+                  compressionOptions: config.performanceMode
+                    ? { level: 1 }
+                    : { level: 6 },
+                });
+                await storeBatch(batchIndex, batchData);
+                currentBatchZip = null;
               }
+
+              batchIndex++;
+              currentBatch = [];
+              currentBatchZip = config.createZips ? new JSZip() : null;
+              currentBatchSize = 0;
+            }
+
+            const progress = 15 + Math.floor((end / totalRecords) * 70);
+            updateProgress(progress);
+            log(
+              `⏳ ประมวลผล: ${processedCount}/${totalRecords} (${end} records)`,
+              "info"
+            );
+
+            if (
+              (i % 100 === 0 || end >= totalRecords) &&
+              config.cpuThrottle > 0
+            ) {
+              await sleep(
+                config.performanceMode
+                  ? Math.min(config.cpuThrottle, 1)
+                  : config.cpuThrottle
+              );
             }
           }
 
