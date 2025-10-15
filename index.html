@@ -24,7 +24,6 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       :root {
         --primary: #6366f1;
         --primary-dark: #4f46e5;
@@ -37,7 +36,6 @@
         --gray: #64748b;
         --border: #e2e8f0;
       }
-
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -45,31 +43,26 @@
         padding: 20px;
         color: var(--dark);
       }
-
       .container {
-        max-width: 800px; /* ลดความกว้างเพื่อให้ compact มากขึ้น */
+        max-width: 800px;
         margin: 0 auto;
       }
-
       .hero {
         text-align: center;
         color: white;
         margin-bottom: 30px;
         animation: fadeInDown 0.8s ease-out;
       }
-
       .hero h1 {
         font-size: 2.5rem;
         margin-bottom: 10px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
-
       .hero .subtitle {
         font-size: 1.1rem;
         opacity: 0.9;
         margin-bottom: 15px;
       }
-
       .hero .features {
         display: flex;
         justify-content: center;
@@ -77,7 +70,6 @@
         flex-wrap: wrap;
         margin-top: 15px;
       }
-
       .feature-badge {
         background: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
@@ -88,7 +80,6 @@
         align-items: center;
         gap: 6px;
       }
-
       .card {
         background: white;
         border-radius: 15px;
@@ -97,13 +88,11 @@
         margin-bottom: 15px;
         animation: fadeInUp 0.8s ease-out;
       }
-
       .card-header {
         border-bottom: 2px solid var(--border);
         padding-bottom: 15px;
         margin-bottom: 20px;
       }
-
       .card-header h2 {
         color: var(--primary);
         font-size: 1.5rem;
@@ -111,7 +100,6 @@
         align-items: center;
         gap: 8px;
       }
-
       .alert {
         background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
         border-left: 4px solid var(--warning);
@@ -121,17 +109,14 @@
         line-height: 1.5;
         font-size: 0.9rem;
       }
-
       .alert strong {
         display: block;
         margin-bottom: 8px;
         color: #92400e;
       }
-
       .form-section {
         margin-bottom: 15px;
       }
-
       .form-section label {
         display: block;
         font-weight: 600;
@@ -139,13 +124,11 @@
         color: var(--dark);
         font-size: 0.9rem;
       }
-
       .btn-group {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
       }
-
       .btn {
         padding: 12px 24px;
         border: none;
@@ -161,7 +144,6 @@
         justify-content: center;
         min-width: 120px;
       }
-
       .btn-primary {
         background: linear-gradient(
           135deg,
@@ -170,37 +152,30 @@
         );
         color: white;
       }
-
       .btn-primary:hover:not(:disabled) {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
       }
-
       .btn-success {
         background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
         color: white;
       }
-
       .btn-success:hover:not(:disabled) {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
       }
-
       .btn-danger {
         background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
         color: white;
       }
-
       .btn-danger:hover:not(:disabled) {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
       }
-
       .btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
       }
-
       .file-info {
         background: var(--light);
         padding: 12px 16px;
@@ -212,13 +187,11 @@
         font-weight: 500;
         font-size: 0.9rem;
       }
-
       .file-info.active {
         background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
         border-color: var(--primary);
         color: var(--primary-dark);
       }
-
       input[type="number"] {
         width: 100%;
         padding: 10px 14px;
@@ -227,13 +200,11 @@
         font-size: 0.95rem;
         transition: all 0.3s ease;
       }
-
       input[type="number"]:focus {
         outline: none;
         border-color: var(--primary);
         box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
       }
-
       .checkbox-group {
         display: flex;
         align-items: center;
@@ -246,28 +217,23 @@
         transition: all 0.3s ease;
         font-size: 0.9rem;
       }
-
       .checkbox-group:hover {
         background: #e0e7ff;
       }
-
       .checkbox-group input[type="checkbox"] {
         width: 18px;
         height: 18px;
         cursor: pointer;
         accent-color: var(--primary);
       }
-
       .checkbox-group label {
         cursor: pointer;
         margin: 0;
         flex: 1;
       }
-
       .progress-section {
         margin-top: 20px;
       }
-
       .status {
         text-align: center;
         font-size: 1.1rem;
@@ -278,7 +244,6 @@
         background: var(--light);
         border-radius: 8px;
       }
-
       .progress-bar {
         width: 100%;
         height: 30px;
@@ -288,7 +253,6 @@
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         margin-bottom: 15px;
       }
-
       .progress-fill {
         height: 100%;
         background: linear-gradient(
@@ -304,7 +268,6 @@
         font-weight: 600;
         font-size: 0.85rem;
       }
-
       .log-box {
         background: #1e293b;
         border-radius: 8px;
@@ -316,44 +279,35 @@
         font-size: 0.8rem;
         box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
       }
-
       .log-entry {
         padding: 3px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
-
       .log-entry:last-child {
         border-bottom: none;
       }
-
       .log-timestamp {
         color: #94a3b8;
         margin-right: 8px;
       }
-
       .log-message {
         color: #e2e8f0;
       }
-
       .log-info .log-message {
         color: #60a5fa;
       }
-
       .log-warning .log-message {
         color: #fbbf24;
       }
-
       .log-error .log-message {
         color: #f87171;
       }
-
       .settings-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 15px;
         margin-bottom: 15px;
       }
-
       .footer {
         text-align: center;
         color: white;
@@ -364,21 +318,17 @@
         border-radius: 10px;
         font-size: 0.85rem;
       }
-
       .footer a {
         color: white;
         text-decoration: none;
         font-weight: 600;
       }
-
       .footer a:hover {
         text-decoration: underline;
       }
-
       .accordion {
         margin-bottom: 15px;
       }
-
       .accordion-header {
         background: var(--light);
         padding: 12px 15px;
@@ -390,7 +340,6 @@
         justify-content: space-between;
         align-items: center;
       }
-
       .accordion-content {
         max-height: 0;
         overflow: hidden;
@@ -401,22 +350,18 @@
         margin-top: 0px;
         opacity: 0;
       }
-
       .accordion-content.open {
         max-height: 1000px;
         opacity: 1;
         margin-top: 5px;
         padding: 15px;
       }
-
       .accordion-arrow {
         transition: transform 0.3s ease;
       }
-
       .accordion-arrow.open {
         transform: rotate(180deg);
       }
-
       @keyframes fadeInDown {
         from {
           opacity: 0;
@@ -427,7 +372,6 @@
           transform: translateY(0);
         }
       }
-
       @keyframes fadeInUp {
         from {
           opacity: 0;
@@ -438,7 +382,6 @@
           transform: translateY(0);
         }
       }
-
       @keyframes slideIn {
         from {
           opacity: 0;
@@ -449,37 +392,29 @@
           transform: translateX(0);
         }
       }
-
       @media (max-width: 768px) {
         .hero h1 {
           font-size: 1.8rem;
         }
-
         .hero .subtitle {
           font-size: 0.95rem;
         }
-
         .hero .features {
           gap: 10px;
         }
-
         .feature-badge {
           font-size: 0.75rem;
           padding: 6px 12px;
         }
-
         .card {
           padding: 15px;
         }
-
         .btn-group {
           flex-direction: column;
         }
-
         .btn {
           width: 100%;
         }
-
         .settings-grid {
           grid-template-columns: 1fr;
         }
@@ -502,20 +437,17 @@
           <div class="feature-badge">✓ รองรับ EMK, DBF</div>
         </div>
       </div>
-
       <!-- Main Card -->
       <div class="card">
         <div class="card-header">
           <h2>🚀 เริ่มต้นใช้งาน</h2>
         </div>
-
         <!-- Warning Alert -->
         <div class="alert">
           <strong>⚠️ ข้อกำหนดการใช้งาน:</strong>
           ต้องใช้เบราว์เซอร์ที่รองรับ File System Access API (Chrome 86+, Edge
           86+) เท่านั้น
         </div>
-
         <!-- Input Selection -->
         <div class="form-section">
           <label>📂 เลือกโฟลเดอร์คาราโอเกะ</label>
@@ -526,7 +458,6 @@
           </div>
           <div class="file-info" id="inputInfo">ยังไม่ได้เลือกอินพุต</div>
         </div>
-
         <!-- Advanced Settings Accordion -->
         <div class="accordion">
           <div class="accordion-header" id="settingsToggle">
@@ -546,7 +477,6 @@
                   max="1000"
                 />
               </div>
-
               <div class="form-section">
                 <label>💾 ZIP Size Limit (MB)</label>
                 <input
@@ -557,7 +487,6 @@
                   max="5000"
                 />
               </div>
-
               <div class="form-section">
                 <label>⚙️ CPU Throttle (ms)</label>
                 <input
@@ -570,7 +499,6 @@
                 />
               </div>
             </div>
-
             <!-- Checkboxes -->
             <div class="checkbox-group">
               <input type="checkbox" id="performanceMode" checked />
@@ -578,21 +506,18 @@
                 >⚡ Performance Mode (ใช้ CPU สูงเพื่อความเร็ว)</label
               >
             </div>
-
             <div class="checkbox-group">
               <input type="checkbox" id="createZips" checked />
               <label for="createZips"
                 >📦 สร้างไฟล์ ZIP สำหรับเพลง (karaoke_*.zip)</label
               >
             </div>
-
             <div class="checkbox-group">
               <input type="checkbox" id="createIndexZip" checked />
               <label for="createIndexZip">🔍 สร้าง index.zip สำหรับค้นหา</label>
             </div>
           </div>
         </div>
-
         <!-- Action Buttons -->
         <div class="btn-group" style="margin-top: 20px">
           <button class="btn btn-success" id="startBtn">
@@ -602,7 +527,6 @@
             ⏹️ หยุดการทำงาน
           </button>
         </div>
-
         <!-- Progress Section -->
         <div class="progress-section">
           <div class="status" id="statusText">พร้อมเริ่มงาน</div>
@@ -614,7 +538,6 @@
           <div class="log-box" id="logBox"></div>
         </div>
       </div>
-
       <!-- About Section (Accordion for compactness) -->
       <div class="accordion">
         <div class="accordion-header" id="aboutToggle">
@@ -648,7 +571,6 @@
           </p>
         </div>
       </div>
-
       <!-- FAQ Section (Accordion for compactness) -->
       <div class="accordion">
         <div class="accordion-header" id="faqToggle">
@@ -662,21 +584,17 @@
               A: รองรับเบราว์เซอร์หลักทั้งหมด เช่น Chrome, Edge, Firefox และ
               Safari (เวอร์ชันล่าสุด)
             </dd>
-
             <dt>Q: สามารถใช้งานออฟไลน์ได้หรือไม่?</dt>
             <dd>
               A: ได้ หากเปิดใช้งานครั้งแรกในโหมดออนไลน์ ระบบจะเก็บ cache
               เพื่อให้ทำงานออฟไลน์ได้บางส่วน
             </dd>
-
             <dt>Q: มีค่าใช้จ่ายในการใช้งานหรือไม่?</dt>
             <dd>A: Karaoke Processor (Web) เป็นบริการฟรีสำหรับผู้ใช้ทั่วไป</dd>
-
             <dt>Q: ไฟล์ที่อัปโหลดจะถูกเก็บไว้ในเซิร์ฟเวอร์หรือไม่?</dt>
             <dd>
               A: ไม่ ทุกไฟล์จะถูกประมวลผลในเครื่องของคุณผ่านเบราว์เซอร์โดยตรง
             </dd>
-
             <dt>Q: บริการนี้สนับสนุนการละเมิดลิขสิทธิ์หรือไม่?</dt>
             <dd>
               A: ไม่
@@ -686,7 +604,6 @@
           </dl>
         </div>
       </div>
-
       <!-- Footer -->
       <div class="footer">
         <p>Made with ❤️ by Next Karaoke Team</p>
@@ -696,19 +613,16 @@
         </p>
       </div>
     </div>
-
     <script>
       let rootDirHandle = null;
       let isProcessing = false;
       let shouldStop = false;
       let worker = null;
       let db = null;
-
       const DB_NAME = "KaraokeProcessorDB";
       const DB_VERSION = 1;
       const STORE_RECORDS = "records";
       const STORE_BATCHES = "batches";
-
       const elements = {
         selectFolderBtn: document.getElementById("selectFolderBtn"),
         inputInfo: document.getElementById("inputInfo"),
@@ -725,18 +639,28 @@
         performanceMode: document.getElementById("performanceMode"),
       };
 
+      // Error code mapping for user-friendly messages
+      const errorMessages = {
+        E001: "ไม่สามารถอ่าน header ของไฟล์ SONG.DBF ได้ กรุณาตรวจสอบว่าไฟล์มีโครงสร้างถูกต้องหรือไม่",
+        E002: "ไม่สามารถประมวลผล records ในไฟล์ SONG.DBF ได้ อาจเนื่องจากไฟล์เสียหายหรือขนาดใหญ่เกินไป",
+        E003: "การประมวลผลไฟล์ SONG.DBF ใช้เวลานานเกิน 5 นาที กรุณาลองลด batch size หรือใช้ performance mode",
+        E004: "ไม่พบไฟล์ SONG.DBF ในโฟลเดอร์ Data/ กรุณาตรวจสอบโฟลเดอร์ที่เลือก",
+        E005: "ไม่สามารถเข้าถึงไฟล์เพลง (midi/lyr/cur/emk) กรุณาตรวจสอบว่าไฟล์ครบถ้วนและอยู่ในโฟลเดอร์ที่ถูกต้อง",
+        E006: "การสร้างไฟล์ ZIP ล้มเหลว กรุณาตรวจสอบหน่วยความจำของเครื่องหรือลองใช้ performance mode",
+        E007: "การสร้าง search index ล้มเหลว กรุณาลองอีกครั้งหรือลดจำนวนเพลง",
+        E008: "เกิดข้อผิดพลาดใน Web Worker กรุณาลองรีเฟรชหน้าเว็บหรือตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
+      };
+
       // Accordion logic
       const accordions = [
         { toggle: "settingsToggle", content: "settingsContent", arrow: true },
         { toggle: "aboutToggle", content: "aboutContent", arrow: true },
         { toggle: "faqToggle", content: "faqContent", arrow: true },
       ];
-
       accordions.forEach((acc) => {
         const toggle = document.getElementById(acc.toggle);
         const content = document.getElementById(acc.content);
         const arrow = toggle.querySelector(".accordion-arrow");
-
         toggle.addEventListener("click", () => {
           content.classList.toggle("open");
           if (arrow) arrow.classList.toggle("open");
@@ -747,21 +671,16 @@
         const timestamp = new Date().toLocaleTimeString("th-TH");
         const logEntry = document.createElement("div");
         logEntry.className = `log-entry log-${type}`;
-
         const timeSpan = document.createElement("span");
         timeSpan.className = "log-timestamp";
         timeSpan.textContent = `[${timestamp}]`;
-
         const messageSpan = document.createElement("span");
         messageSpan.className = "log-message";
         messageSpan.textContent = message;
-
         logEntry.appendChild(timeSpan);
         logEntry.appendChild(messageSpan);
-
         elements.logBox.appendChild(logEntry);
         elements.logBox.scrollTop = elements.logBox.scrollHeight;
-
         while (elements.logBox.children.length > 1000) {
           elements.logBox.removeChild(elements.logBox.firstChild);
         }
@@ -780,8 +699,10 @@
       async function initDB() {
         return new Promise((resolve, reject) => {
           const request = indexedDB.open(DB_NAME, DB_VERSION);
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] IndexedDB error: ${event.target.error}`, "error");
             reject("IndexedDB error: " + event.target.error);
+          };
           request.onsuccess = (event) => {
             db = event.target.result;
             resolve(db);
@@ -804,8 +725,10 @@
           const store = transaction.objectStore(storeName);
           const request = store.clear();
           request.onsuccess = resolve;
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Clear error: ${event.target.error}`, "error");
             reject("Clear error: " + event.target.error);
+          };
         });
       }
 
@@ -816,8 +739,10 @@
           record._id = id;
           const request = store.put(record);
           request.onsuccess = resolve;
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Store error: ${event.target.error}`, "error");
             reject("Store error: " + event.target.error);
+          };
         });
       }
 
@@ -827,8 +752,10 @@
           const store = transaction.objectStore(STORE_RECORDS);
           const request = store.get(id);
           request.onsuccess = (event) => resolve(event.target.result);
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Get error: ${event.target.error}`, "error");
             reject("Get error: " + event.target.error);
+          };
         });
       }
 
@@ -838,8 +765,10 @@
           const store = transaction.objectStore(STORE_RECORDS);
           const request = store.count();
           request.onsuccess = (event) => resolve(event.target.result);
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Count error: ${event.target.error}`, "error");
             reject("Count error: " + event.target.error);
+          };
         });
       }
 
@@ -850,8 +779,10 @@
           const data = { _batchId: batchId, data: batchData };
           const request = store.put(data);
           request.onsuccess = resolve;
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Store batch error: ${event.target.error}`, "error");
             reject("Store batch error: " + event.target.error);
+          };
         });
       }
 
@@ -861,8 +792,10 @@
           const store = transaction.objectStore(STORE_BATCHES);
           const request = store.get(batchId);
           request.onsuccess = (event) => resolve(event.target.result?.data);
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Get batch error: ${event.target.error}`, "error");
             reject("Get batch error: " + event.target.error);
+          };
         });
       }
 
@@ -872,8 +805,10 @@
           const store = transaction.objectStore(STORE_BATCHES);
           const request = store.getAllKeys();
           request.onsuccess = (event) => resolve(event.target.result);
-          request.onerror = (event) =>
+          request.onerror = (event) => {
+            log(`❌ [E008] Get keys error: ${event.target.error}`, "error");
             reject("Get keys error: " + event.target.error);
+          };
         });
       }
 
@@ -881,18 +816,24 @@
         self.importScripts(
           "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
         );
-
         function parseDBFHeader(buffer) {
           try {
             const view = new DataView(buffer);
             const recordCount = view.getUint32(4, true);
             const headerLength = view.getUint16(8, true);
             const recordLength = view.getUint16(10, true);
-
             const fieldCount = Math.floor((headerLength - 32 - 1) / 32);
             const fields = [];
             let offset = 32;
-
+            self.postMessage({
+              action: "log",
+              message: `📋 เริ่ม parse header ของ SONG.DBF: ${recordCount} records, ${fieldCount} fields, ขนาด buffer ${(
+                buffer.byteLength /
+                1024 /
+                1024
+              ).toFixed(2)} MB`,
+              type: "info",
+            });
             for (let i = 0; i < fieldCount; i++) {
               const nameBytes = new Uint8Array(
                 buffer.slice(offset, offset + 11)
@@ -910,13 +851,25 @@
               fields.push({ name, type, length });
               offset += 32;
             }
-
+            self.postMessage({
+              action: "log",
+              message: `✅ เสร็จสิ้นการ parse header: พบ ${fields.length} fields`,
+              type: "info",
+            });
             return { recordCount, headerLength, recordLength, fields };
           } catch (error) {
-            throw new Error(`DBF Header Parsing Error: ${error.message}`);
+            self.postMessage({
+              action: "error",
+              errorCode: "E001",
+              message: `DBF Header Parsing Error: ${error.message} ที่ offset ${
+                offset || 0
+              }`,
+              suggestion:
+                "ตรวจสอบว่าไฟล์ SONG.DBF มีโครงสร้างถูกต้องหรือไม่ ลองใช้ DBF Viewer เพื่อตรวจสอบไฟล์",
+            });
+            throw error;
           }
         }
-
         function tryDecode(bytes) {
           const encodings = ["windows-874", "utf-8"];
           for (const encoding of encodings) {
@@ -926,23 +879,33 @@
               continue;
             }
           }
-          return "";
+          return "[ไม่สามารถถอดรหัสได้]";
         }
-
         function parseDBFRecords(buffer, header) {
           try {
             const records = [];
             const dataStart = header.headerLength;
             const uint8Array = new Uint8Array(buffer);
-
+            self.postMessage({
+              action: "log",
+              message: `📋 เริ่ม parse ${header.recordCount} records จาก offset ${dataStart}`,
+              type: "info",
+            });
             for (let i = 0; i < header.recordCount; i++) {
               const recordOffset = dataStart + i * header.recordLength;
-              if (recordOffset + header.recordLength > buffer.byteLength) break;
+              if (recordOffset + header.recordLength > buffer.byteLength) {
+                self.postMessage({
+                  action: "error",
+                  errorCode: "E002",
+                  message: `DBF Records Parsing Error: Offset ${recordOffset} เกินขนาด buffer (${buffer.byteLength})`,
+                  suggestion:
+                    "ไฟล์อาจเสียหายหรือมีขนาดไม่ถูกต้อง กรุณาตรวจสอบไฟล์ SONG.DBF",
+                });
+                break;
+              }
               if (uint8Array[recordOffset] === 0x2a) continue;
-
               const record = {};
               let fieldOffset = recordOffset + 1;
-
               for (const field of header.fields) {
                 const fieldBytes = uint8Array.slice(
                   fieldOffset,
@@ -951,76 +914,112 @@
                 record[field.name] = tryDecode(fieldBytes);
                 fieldOffset += field.length;
               }
-
               records.push(record);
+              if (i % 500 === 0) {
+                self.postMessage({
+                  action: "log",
+                  message: `⏳ ประมวลผล ${i} จาก ${
+                    header.recordCount
+                  } records (${((i / header.recordCount) * 100).toFixed(1)}%)`,
+                  type: "info",
+                });
+              }
             }
-
+            self.postMessage({
+              action: "log",
+              message: `✅ เสร็จสิ้นการ parse records: ${records.length} เพลง`,
+              type: "info",
+            });
             return records;
           } catch (error) {
-            throw new Error(`DBF Records Parsing Error: ${error.message}`);
+            self.postMessage({
+              action: "error",
+              errorCode: "E002",
+              message: `DBF Records Parsing Error: ${
+                error.message
+              } ที่ record ที่ ${i || 0}`,
+              suggestion:
+                "ไฟล์อาจเสียหายหรือมี encoding ไม่ถูกต้อง ลองตรวจสอบด้วยเครื่องมือเช่น DBF Viewer",
+            });
+            throw error;
           }
         }
-
         async function createMIDIZip(midi, lyr, cur, performanceMode) {
           try {
             const zip = new JSZip();
             zip.file("song.mid", midi);
             zip.file("song.lyr", lyr);
             zip.file("song.cur", cur);
-            return await zip.generateAsync({
+            self.postMessage({
+              action: "log",
+              message: `📦 เริ่มสร้างไฟล์ ZIP สำหรับเพลง (performance mode: ${performanceMode})`,
+              type: "info",
+            });
+            const zipData = await zip.generateAsync({
               type: "uint8array",
               compression: performanceMode ? "DEFLATE" : "DEFLATE",
               compressionOptions: performanceMode ? { level: 1 } : { level: 6 },
             });
+            self.postMessage({
+              action: "log",
+              message: `✅ สร้างไฟล์ ZIP สำเร็จ: ${(
+                zipData.length / 1024
+              ).toFixed(2)} KB`,
+              type: "info",
+            });
+            return zipData;
           } catch (error) {
-            throw new Error(`MIDI ZIP Creation Error: ${error.message}`);
+            self.postMessage({
+              action: "error",
+              errorCode: "E006",
+              message: `MIDI ZIP Creation Error: ${error.message}`,
+              suggestion:
+                "หน่วยความจำอาจไม่เพียงพอ ลองใช้ performance mode หรือลด batch size",
+            });
+            throw error;
           }
         }
-
         async function buildSearchIndex(records) {
           try {
+            self.postMessage({
+              action: "log",
+              message: `🔍 เริ่มสร้าง search index สำหรับ ${records.length} เพลง`,
+              type: "info",
+            });
             const wordMap = {};
             const chunks = {};
             let chunkId = 0;
             let currentChunk = {};
             let currentChunkSize = 0;
             const MAX_CHUNK_SIZE = 5 * 1024 * 1024;
-
             function extractWords(text) {
               return (text.match(/[a-zA-Z\d\u0e00-\u0e7f]+/g) || [])
                 .map((w) => w.toLowerCase())
                 .filter((w) => w.length > 1);
             }
-
             for (const record of records) {
               if (
                 record._originalIndex === undefined ||
                 record._superIndex === undefined
               )
                 continue;
-
               const preview = {
                 t: record.TITLE || "",
                 a: record.ARTIST || "",
                 i: record._originalIndex,
                 s: record._superIndex,
               };
-
               const text = `${record.TITLE} ${record.ARTIST}`;
               const words = extractWords(text);
-
               for (const word of words) {
                 if (!wordMap[word]) wordMap[word] = [];
                 wordMap[word].push(preview);
               }
             }
-
             const sortedWords = Object.keys(wordMap).sort();
             const wordToChunk = {};
-
             for (const word of sortedWords) {
               const entrySize = JSON.stringify(wordMap[word]).length;
-
               if (
                 currentChunkSize + entrySize > MAX_CHUNK_SIZE &&
                 Object.keys(currentChunk).length > 0
@@ -1030,16 +1029,13 @@
                 currentChunk = {};
                 currentChunkSize = 0;
               }
-
               currentChunk[word] = wordMap[word];
               wordToChunk[word] = chunkId;
               currentChunkSize += entrySize;
             }
-
             if (Object.keys(currentChunk).length > 0) {
               chunks[chunkId] = currentChunk;
             }
-
             const masterIndex = {
               totalRecords: records.length,
               words: sortedWords,
@@ -1047,16 +1043,27 @@
               buildTime: Date.now(),
               lastBuilt: new Date().toISOString(),
             };
-
+            self.postMessage({
+              action: "log",
+              message: `✅ สร้าง search index เสร็จ: ${
+                sortedWords.length
+              } คำ, ${chunkId + 1} chunks`,
+              type: "info",
+            });
             return { masterIndex, chunks };
           } catch (error) {
-            throw new Error(`Search Index Building Error: ${error.message}`);
+            self.postMessage({
+              action: "error",
+              errorCode: "E007",
+              message: `Search Index Building Error: ${error.message}`,
+              suggestion: "ลองลดจำนวนเพลงหรือตรวจสอบหน่วยความจำของเครื่อง",
+            });
+            throw error;
           }
         }
-
         self.onmessage = async (e) => {
-          const { action, data } = e.data;
           try {
+            const { action, data } = e.data;
             if (action === "parseDBF") {
               const header = parseDBFHeader(data.buffer);
               const records = parseDBFRecords(data.buffer, header);
@@ -1074,7 +1081,13 @@
               self.postMessage({ action: "buildSearchIndexResult", indexData });
             }
           } catch (error) {
-            self.postMessage({ action: "error", message: error.message });
+            self.postMessage({
+              action: "error",
+              errorCode: "E008",
+              message: `Worker Error: ${error.message}`,
+              suggestion:
+                "ลองรีเฟรชหน้าเว็บหรือตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
+            });
           }
         };
       };
@@ -1086,16 +1099,32 @@
       worker = new Worker(workerURL);
 
       worker.onmessage = (e) => {
-        const { action, message, header, records, zipData, indexData } = e.data;
+        const {
+          action,
+          message,
+          errorCode,
+          suggestion,
+          header,
+          records,
+          zipData,
+          indexData,
+          type,
+        } = e.data;
         if (action === "parseDBFResult") {
           workerParseDBFResult(header, records);
         } else if (action === "createMIDIZipResult") {
           workerCreateMIDIZipResult(zipData);
         } else if (action === "buildSearchIndexResult") {
           workerBuildSearchIndexResult(indexData);
+        } else if (action === "log") {
+          log(message, type);
         } else if (action === "error") {
-          log(`❌ Worker Error: ${message}`, "error");
-          updateStatus("❌ เกิดข้อผิดพลาดใน Worker");
+          const userMessage = errorCode ? errorMessages[errorCode] : message;
+          log(`❌ [${errorCode || "E008"}] ${userMessage}`, "error");
+          if (suggestion) {
+            log(`💡 คำแนะนำ: ${suggestion}`, "warning");
+          }
+          updateStatus(`❌ เกิดข้อผิดพลาด: ${userMessage}`);
           isProcessing = false;
           elements.startBtn.disabled = false;
           elements.stopBtn.disabled = true;
@@ -1110,19 +1139,24 @@
             for (let i = 0; i < pathParts.length - 1; i++) {
               currentHandle = await currentHandle.getDirectoryHandle(
                 pathParts[i],
-                {
-                  create: false,
-                }
+                { create: false }
               );
             }
             const fileName = pathParts[pathParts.length - 1];
             const fileHandle = await currentHandle.getFileHandle(fileName);
             const file = await fileHandle.getFile();
+            log(
+              `📄 อ่านไฟล์ ${fullPath} สำเร็จ: ${(file.size / 1024).toFixed(
+                2
+              )} KB`,
+              "info"
+            );
             return { arrayBuffer: () => file.arrayBuffer() };
           }
           return null;
         } catch (e) {
-          log(`⚠️ ไม่พบไฟล์ ${fullPath}: ${e.message}`, "warning");
+          log(`❌ [E005] ไม่พบไฟล์ ${fullPath}: ${e.message}`, "error");
+          log(`💡 คำแนะนำ: ตรวจสอบว่าไฟล์อยู่ในโฟลเดอร์ที่ถูกต้อง`, "warning");
           return null;
         }
       }
@@ -1130,13 +1164,12 @@
       async function getSongFiles(track) {
         if (!track.CODE || !track.TYPE || !track.SUB_TYPE) {
           log(`⚠️ Track ข้อมูลไม่ครบ: ${JSON.stringify(track)}`, "warning");
+          log(`💡 คำแนะนำ: ตรวจสอบข้อมูลในไฟล์ SONG.DBF`, "warning");
           return null;
         }
-
         const code = track.CODE;
         const folder = code[0];
         const primaryPath = ["Songs", track.TYPE, track.SUB_TYPE];
-
         try {
           if (track.SUB_TYPE === "EMK") {
             let emkFile = await getFileByPath([
@@ -1167,7 +1200,6 @@
                 `${code}.cur`,
               ]) || getFileByPath([...primaryPath, "Cursor", `${code}.cur`]),
             ]);
-
             if (midiFile && lyrFile && curFile) {
               const [midi, lyr, cur] = await Promise.all([
                 midiFile.arrayBuffer(),
@@ -1177,10 +1209,19 @@
               return { midi, lyr, cur };
             }
           }
+          log(`❌ [E005] ไม่พบไฟล์เพลงสำหรับ CODE: ${code}`, "error");
+          log(
+            `💡 คำแนะนำ: ตรวจสอบโฟลเดอร์ Songs/${track.TYPE}/${track.SUB_TYPE}`,
+            "warning"
+          );
           return null;
         } catch (e) {
           log(
-            `⚠️ Error fetching song files for ${code}: ${e.message}`,
+            `❌ [E005] Error fetching song files for ${code}: ${e.message}`,
+            "error"
+          );
+          log(
+            `💡 คำแนะนำ: ตรวจสอบว่าไฟล์ครบถ้วนและอยู่ในโฟลเดอร์ที่ถูกต้อง`,
             "warning"
           );
           return null;
@@ -1216,7 +1257,9 @@
         return new Promise((resolve, reject) => {
           workerParseDBFResultResolve = resolve;
           worker.postMessage({ action: "parseDBF", data: { buffer } });
-          setTimeout(() => reject(new Error("DBF parsing timeout")), 30000);
+          setTimeout(() => {
+            reject(new Error("[E003] DBF parsing timeout หลังจาก 5 นาที"));
+          }, 300000);
         });
       }
 
@@ -1228,7 +1271,7 @@
             data: { midi, lyr, cur, performanceMode },
           });
           setTimeout(
-            () => reject(new Error("MIDI ZIP creation timeout")),
+            () => reject(new Error("[E006] MIDI ZIP creation timeout")),
             10000
           );
         });
@@ -1239,7 +1282,7 @@
           workerBuildSearchIndexResultResolve = resolve;
           worker.postMessage({ action: "buildSearchIndex", data: { records } });
           setTimeout(
-            () => reject(new Error("Search index building timeout")),
+            () => reject(new Error("[E007] Search index building timeout")),
             60000
           );
         });
@@ -1257,55 +1300,84 @@
           a.click();
           document.body.removeChild(a);
           setTimeout(() => URL.revokeObjectURL(url), 100);
+          log(
+            `✅ ดาวน์โหลด ${filename} สำเร็จ: ${(
+              blob.size /
+              1024 /
+              1024
+            ).toFixed(2)} MB`,
+            "info"
+          );
         } catch (e) {
-          log(`❌ Error downloading file ${filename}: ${e.message}`, "error");
+          log(
+            `❌ [E006] Error downloading file ${filename}: ${e.message}`,
+            "error"
+          );
+          log(`💡 คำแนะนำ: ตรวจสอบหน่วยความจำหรือลองรีเฟรชหน้าเว็บ`, "warning");
         }
       }
 
       async function processKaraoke() {
         shouldStop = false;
         isProcessing = true;
-
         try {
+          updateStatus("🚀 เริ่มต้นการประมวลผล...");
+          log("📋 เตรียมฐานข้อมูล IndexedDB...", "info");
           await initDB();
           await clearDBStore(STORE_RECORDS);
           await clearDBStore(STORE_BATCHES);
-
           if (!rootDirHandle) {
-            throw new Error("กรุณาเลือกโฟลเดอร์ก่อน");
+            throw new Error("[E004] กรุณาเลือกโฟลเดอร์ก่อน");
           }
-
-          updateStatus("กำลังอ่านไฟล์ SONG.DBF...");
+          updateStatus("📂 อ่านไฟล์ SONG.DBF...");
           log("📖 อ่านไฟล์ Data/SONG.DBF", "info");
-
           const dbfFile = await getFileByPath(["Data", "SONG.DBF"]);
           if (!dbfFile) {
-            throw new Error("ไม่พบไฟล์ Data/SONG.DBF");
+            throw new Error("[E004] ไม่พบไฟล์ Data/SONG.DBF");
           }
-
           const dbfBuffer = await dbfFile.arrayBuffer();
           updateProgress(5);
-
-          log("🔍 กำลัง parse DBF header...", "info");
+          updateStatus(
+            `📋 อ่านไฟล์ SONG.DBF สำเร็จ (${(
+              dbfBuffer.byteLength /
+              1024 /
+              1024
+            ).toFixed(2)} MB)`
+          );
+          log(
+            `✅ อ่านไฟล์ SONG.DBF สำเร็จ: ${(
+              dbfBuffer.byteLength /
+              1024 /
+              1024
+            ).toFixed(2)} MB`,
+            "info"
+          );
+          log("🔍 เริ่ม parse DBF header...", "info");
           let { header, records } = await parseDBF(dbfBuffer);
+          updateProgress(10);
+          updateStatus(`✅ Parse SONG.DBF เสร็จ: พบ ${records.length} เพลง`);
           log(
             `✅ พบ ${header.recordCount} records, ${header.fields.length} fields`,
             "info"
           );
-
-          updateProgress(10);
           log(`✅ Parse สำเร็จ: ${records.length} เพลง`, "info");
-
           log("💾 บันทึก records ลง IndexedDB...", "info");
           for (let i = 0; i < records.length; i++) {
             await storeRecord(records[i], i);
+            if (i % 500 === 0) {
+              log(
+                `⏳ บันทึก ${i} จาก ${records.length} records ลง IndexedDB`,
+                "info"
+              );
+            }
           }
           records = null;
-
           updateProgress(15);
-
-          if (shouldStop) throw new Error("หยุดโดยผู้ใช้");
-
+          updateStatus(
+            `💾 บันทึก ${records.length} records ลง IndexedDB เสร็จสิ้น`
+          );
+          log(`✅ บันทึก records ทั้งหมดลง IndexedDB สำเร็จ`, "info");
+          if (shouldStop) throw new Error("[E999] หยุดโดยผู้ใช้");
           const config = {
             batchSize: parseInt(elements.batchSize.value),
             zipSizeLimit: parseInt(elements.zipSizeLimit.value) * 1024 * 1024,
@@ -1314,19 +1386,17 @@
             createIndexZip: elements.createIndexZip.checked,
             performanceMode: elements.performanceMode.checked,
           };
-
           log(
-            `⚙️ Config: Batch=${config.batchSize}, Limit=${(
+            `⚙️ การตั้งค่า: Batch=${config.batchSize} เพลง, ZIP Limit=${(
               config.zipSizeLimit /
               1024 /
               1024
-            ).toFixed(0)}MB, Throttle=${config.cpuThrottle}ms, Performance=${
+            ).toFixed(0)} MB, Throttle=${config.cpuThrottle} ms, Performance=${
               config.performanceMode
             }`,
             "info"
           );
-          updateStatus("กำลังประมวลผลเพลง...");
-
+          updateStatus("🎵 เริ่มประมวลผลเพลง...");
           const totalRecords = await getRecordsCount();
           let successCount = 0;
           let currentBatch = [];
@@ -1335,26 +1405,26 @@
           let batchIndex = 0;
           const parallelBatchSize = config.performanceMode ? 50 : 20;
           const compressionLevel = config.performanceMode ? 1 : 3;
-
           for (let i = 0; i < totalRecords; i += parallelBatchSize) {
-            if (shouldStop) throw new Error("หยุดโดยผู้ใช้");
-
+            if (shouldStop) throw new Error("[E999] หยุดโดยผู้ใช้");
             const end = Math.min(i + parallelBatchSize, totalRecords);
+            updateStatus(
+              `🎵 ประมวลผลเพลง ${i}-${end} จาก ${totalRecords} (${(
+                (end / totalRecords) *
+                100
+              ).toFixed(1)}%)`
+            );
             const batchPromises = [];
-
             for (let j = i; j < end; j++) {
               batchPromises.push(
                 (async () => {
                   const track = await getRecord(j);
                   if (!track) return null;
-
                   try {
                     const files = await getSongFiles(track);
                     if (!files) return null;
-
                     let content = null;
                     let filename = "";
-
                     if (
                       track.SUB_TYPE === "NCN" &&
                       files.midi &&
@@ -1375,14 +1445,10 @@
                       content = new Uint8Array(files.emk);
                       filename = `${j}.emk`;
                     }
-
                     track._originalIndex = j;
                     track._superIndex = batchIndex;
-
                     await storeRecord(track, j);
-
                     successCount++;
-
                     return { trackId: j, content, filename };
                   } catch (e) {
                     return null;
@@ -1390,19 +1456,16 @@
                 })()
               );
             }
-
             const results = await Promise.all(batchPromises);
             results.forEach((result) => {
               if (result && result.content) {
                 currentBatch.push(result);
-
                 if (config.createZips && currentBatchZip) {
                   currentBatchZip.file(result.filename, result.content);
                   currentBatchSize += result.content.length;
                 }
               }
             });
-
             if (
               currentBatch.length >= config.batchSize ||
               (config.createZips && currentBatchSize >= config.zipSizeLimit)
@@ -1411,8 +1474,11 @@
                 log(
                   `💾 บันทึก batch ${batchIndex}: ${
                     currentBatch.length
-                  } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)}MB)`,
+                  } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)} MB)`,
                   "info"
+                );
+                updateStatus(
+                  `📦 บันทึก batch ${batchIndex}: ${currentBatch.length} เพลง`
                 );
                 const batchData = await currentBatchZip.generateAsync({
                   type: "uint8array",
@@ -1424,20 +1490,20 @@
                 await storeBatch(batchIndex, batchData);
                 currentBatchZip = null;
               }
-
               batchIndex++;
               currentBatch = [];
               currentBatchZip = config.createZips ? new JSZip() : null;
               currentBatchSize = 0;
             }
-
             const progress = 15 + Math.floor((end / totalRecords) * 70);
             updateProgress(progress);
             log(
-              `⏳ ประมวลผล: ${successCount}/${totalRecords} (${end} records)`,
+              `⏳ ประมวลผล: ${successCount}/${totalRecords} เพลง (${(
+                (successCount / totalRecords) *
+                100
+              ).toFixed(1)}%)`,
               "info"
             );
-
             if (
               (i % 100 === 0 || end >= totalRecords) &&
               config.cpuThrottle > 0
@@ -1449,11 +1515,15 @@
               );
             }
           }
-
           if (currentBatch.length > 0 && config.createZips && currentBatchZip) {
             log(
-              `💾 บันทึก batch สุดท้าย ${batchIndex}: ${currentBatch.length} เพลง`,
+              `💾 บันทึก batch สุดท้าย ${batchIndex}: ${
+                currentBatch.length
+              } เพลง (${(currentBatchSize / 1024 / 1024).toFixed(2)} MB)`,
               "info"
+            );
+            updateStatus(
+              `📦 บันทึก batch สุดท้าย ${batchIndex}: ${currentBatch.length} เพลง`
             );
             const batchData = await currentBatchZip.generateAsync({
               type: "uint8array",
@@ -1465,29 +1535,34 @@
             await storeBatch(batchIndex, batchData);
             currentBatchZip = null;
           }
-
           updateProgress(85);
+          updateStatus(
+            `✅ ประมวลผลเพลงสำเร็จ: ${successCount}/${totalRecords} เพลง`
+          );
           log(
             `✅ ประมวลผลเสร็จ: ${successCount} เพลง จาก ${totalRecords} records`,
             "info"
           );
-
           if (config.createZips) {
-            log("📦 สร้าง karaoke archives...", "info");
-            updateStatus("กำลังสร้าง karaoke_*.zip...");
-
+            log("📦 เริ่มสร้าง karaoke archives...", "info");
+            updateStatus("📦 สร้างไฟล์ karaoke_*.zip...");
             let archiveIndex = 0;
             let currentArchive = new JSZip();
             let currentArchiveSize = 0;
-
             const batchKeys = await getAllBatchKeys();
             for (const batchId of batchKeys.sort((a, b) => a - b)) {
               const batchData = await getBatch(batchId);
-
               if (
                 currentArchiveSize + batchData.length > config.zipSizeLimit &&
                 currentArchiveSize > 0
               ) {
+                updateStatus(
+                  `📦 สร้าง karaoke_${archiveIndex}.zip (${(
+                    currentArchiveSize /
+                    1024 /
+                    1024
+                  ).toFixed(2)} MB)`
+                );
                 const archiveData = await currentArchive.generateAsync({
                   type: "blob",
                   compression: config.performanceMode ? "DEFLATE" : "DEFLATE",
@@ -1496,47 +1571,33 @@
                     : { level: 6 },
                 });
                 downloadFile(archiveData, `karaoke_${archiveIndex}.zip`);
-                log(
-                  `✅ ดาวน์โหลด karaoke_${archiveIndex}.zip (${(
-                    archiveData.size /
-                    1024 /
-                    1024
-                  ).toFixed(2)}MB)`,
-                  "info"
-                );
-
                 archiveIndex++;
                 currentArchive = new JSZip();
                 currentArchiveSize = 0;
               }
-
               currentArchive.file(`${batchId}.zip`, batchData);
               currentArchiveSize += batchData.length;
             }
-
             if (currentArchiveSize > 0) {
+              updateStatus(
+                `📦 สร้าง karaoke_${archiveIndex}.zip (${(
+                  currentArchiveSize /
+                  1024 /
+                  1024
+                ).toFixed(2)} MB)`
+              );
               const archiveData = await currentArchive.generateAsync({
                 type: "blob",
                 compression: "DEFLATE",
                 compressionOptions: { level: config.performanceMode ? 1 : 6 },
               });
               downloadFile(archiveData, `karaoke_${archiveIndex}.zip`);
-              log(
-                `✅ ดาวน์โหลด karaoke_${archiveIndex}.zip (${(
-                  archiveData.size /
-                  1024 /
-                  1024
-                ).toFixed(2)}MB)`,
-                "info"
-              );
             }
           }
           updateProgress(95);
-
           if (config.createIndexZip) {
-            log("🔍 สร้าง search index...", "info");
-            updateStatus("กำลังสร้าง index.zip...");
-
+            log("🔍 เริ่มสร้าง search index...", "info");
+            updateStatus("🔍 สร้างไฟล์ index.zip...");
             const recordsForIndex = [];
             const total = await getRecordsCount();
             const indexBatchSize = 500;
@@ -1546,12 +1607,14 @@
                 const record = await getRecord(j);
                 if (record) recordsForIndex.push(record);
               }
+              log(`⏳ อ่าน records ${i}-${end} สำหรับ search index`, "info");
             }
-
+            updateStatus(
+              `🔍 ประมวลผล search index สำหรับ ${recordsForIndex.length} เพลง`
+            );
             const { masterIndex, chunks } = await buildSearchIndex(
               recordsForIndex
             );
-
             const indexZip = new JSZip();
             indexZip.file("master.json", JSON.stringify(masterIndex));
             for (const chunkId in chunks) {
@@ -1562,32 +1625,39 @@
             }
             const indexZipData = await indexZip.generateAsync({ type: "blob" });
             downloadFile(indexZipData, "index.zip");
-            log(
-              `✅ ดาวน์โหลด index.zip (${(indexZipData.size / 1024).toFixed(
+            updateStatus(
+              `✅ สร้าง index.zip เสร็จ: ${(indexZipData.size / 1024).toFixed(
                 2
-              )}KB)`,
-              "info"
+              )} KB`
             );
           }
-
           updateProgress(100);
-          updateStatus("🎉 เสร็จสิ้น!");
+          updateStatus(`🎉 การประมวลผลเสร็จสมบูรณ์: ${successCount} เพลง`);
           log("🎉 การประมวลผลเสร็จสมบูรณ์!", "info");
         } catch (error) {
-          if (error.message === "หยุดโดยผู้ใช้") {
+          const errorCode = error.message.match(/\[E\d+\]/)?.[0] || "E008";
+          const userMessage = errorMessages[errorCode] || error.message;
+          if (errorCode === "[E999]") {
             log("⏹️ การทำงานหยุดลงตามคำสั่ง", "warning");
             updateStatus("⏹️ หยุดการทำงานแล้ว");
           } else {
-            log(`❌ เกิดข้อผิดพลาดร้ายแรง: ${error.message}`, "error");
-            updateStatus("❌ เกิดข้อผิดพลาด!");
+            log(`❌ [${errorCode}] ${userMessage}`, "error");
+            log(
+              `💡 คำแนะนำ: ${
+                errorMessages[errorCode] ||
+                "ลองรีเฟรชหน้าเว็บหรือตรวจสอบไฟล์และการตั้งค่า"
+              }`,
+              "warning"
+            );
+            updateStatus(`❌ เกิดข้อผิดพลาด: ${userMessage}`);
           }
         } finally {
           isProcessing = false;
           elements.startBtn.disabled = false;
           elements.stopBtn.disabled = true;
-
           await clearDBStore(STORE_RECORDS);
           await clearDBStore(STORE_BATCHES);
+          log("🧹 ล้างฐานข้อมูล IndexedDB เสร็จสิ้น", "info");
         }
       }
 
@@ -1598,12 +1668,16 @@
             rootDirHandle = handle;
             elements.inputInfo.textContent = `📁 โฟลเดอร์: ${handle.name}`;
             log(`📁 เลือกโฟลเดอร์: ${handle.name}`, "info");
+            updateStatus(`📁 พร้อมประมวลผลโฟลเดอร์: ${handle.name}`);
           } catch (err) {
             log("⚠️ ผู้ใช้ยกเลิกการเลือกโฟลเดอร์", "warning");
+            updateStatus("⚠️ ไม่ได้เลือกโฟลเดอร์");
           }
         } else {
+          log("❌ [E008] เบราว์เซอร์ไม่รองรับ File System Access API", "error");
+          log("💡 คำแนะนำ: ใช้ Chrome หรือ Edge เวอร์ชันล่าสุด", "warning");
           alert("เบราว์เซอร์ของคุณไม่รองรับ File System Access API");
-          log("❌ เบราว์เซอร์ไม่รองรับ File System Access API", "error");
+          updateStatus("❌ เบราว์เซอร์ไม่รองรับ File System Access API");
         }
       });
 
@@ -1612,13 +1686,14 @@
         updateProgress(0);
         elements.startBtn.disabled = true;
         elements.stopBtn.disabled = false;
+        updateStatus("🚀 เริ่มการประมวลผล...");
         processKaraoke();
       });
 
       elements.stopBtn.addEventListener("click", () => {
         shouldStop = true;
         log("⏹️ กำลังส่งคำสั่งหยุด...", "warning");
-        updateStatus("กำลังหยุด...");
+        updateStatus("⏹️ กำลังหยุดการประมวลผล...");
         elements.stopBtn.disabled = true;
       });
     </script>
